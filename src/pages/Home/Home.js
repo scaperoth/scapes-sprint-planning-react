@@ -1,7 +1,15 @@
-import React from "react";
+import React from 'react';
+import FullHeightContainer from '../../components/FullHeightContainer';
+import HeroBanner from '../../components/HeroBanner';
+import Footer from '../../components/Footer';
 
-import "./Home.scss";
+import './Home.scss';
 
-const Home = () => <div id="home-page">Hello!</div>;
+const Home = () => (
+  <FullHeightContainer>
+    <HeroBanner />
+    <Footer />
+  </FullHeightContainer>
+);
 
 export default Home;

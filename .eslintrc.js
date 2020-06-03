@@ -33,5 +33,6 @@ module.exports = {
     'no-throw-literal': 0,
     'react/jsx-props-no-spreading': 0,
     'global-require': 0,
+    'react/jsx-fragments': 0,
   },
 };
