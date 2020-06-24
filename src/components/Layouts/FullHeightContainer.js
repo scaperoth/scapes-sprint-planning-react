@@ -10,14 +10,15 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const StickyFooter = ({ children }) => {
+const FullHeightContainer = ({ children }) => {
   const classes = useStyles();
 
   return <div className={classes.root}>{children}</div>;
 };
 
-StickyFooter.propTypes = {
-  children: PropTypes.element.isRequired,
+FullHeightContainer.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.array])
+    .isRequired,
 };
 
-export default StickyFooter;
+export default FullHeightContainer;

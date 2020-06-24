@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -8,14 +10,20 @@ import Container from '@material-ui/core/Container';
 const useStyles = makeStyles(theme => ({
   heroContent: {
     padding: theme.spacing(20, 10, 6),
+    fontFamily: 'OpenSans',
+    fontWeight: 100,
   },
   heroButtons: {
     marginTop: theme.spacing(4),
   },
 }));
 
-export default function HeroBanner() {
+const HeroBanner = ({ history }) => {
   const classes = useStyles();
+
+  const routeToLogin = () => {
+    history.push('login');
+  };
 
   return (
     <div className={classes.heroContent}>
@@ -40,7 +48,7 @@ export default function HeroBanner() {
               </Button>
             </Grid>
             <Grid item>
-              <Button variant="outlined" color="primary">
+              <Button onClick={routeToLogin} variant="outlined" color="primary">
                 Log In
               </Button>
             </Grid>
@@ -49,4 +57,12 @@ export default function HeroBanner() {
       </Container>
     </div>
   );
-}
+};
+
+HeroBanner.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
+
+export default withRouter(HeroBanner);
