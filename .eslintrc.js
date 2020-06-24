@@ -34,5 +34,6 @@ module.exports = {
     'react/jsx-props-no-spreading': 0,
     'global-require': 0,
     'react/jsx-fragments': 0,
+    'react/jsx-wrap-multilines': 0,
   },
 };
