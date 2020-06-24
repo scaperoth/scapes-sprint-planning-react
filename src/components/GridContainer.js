@@ -1,24 +1,29 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(() => ({
   root: {
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '100vh',
+    flexGrow: 1,
   },
 }));
 
-const FullHeightContainer = ({ children }) => {
+const GridContainer = ({ children }) => {
   const classes = useStyles();
 
-  return <div className={classes.root}>{children}</div>;
+  return (
+    <div className={classes.root}>
+      <Grid container spacing={3}>
+        {children}
+      </Grid>
+    </div>
+  );
 };
 
-FullHeightContainer.propTypes = {
+GridContainer.propTypes = {
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.array])
     .isRequired,
 };
 
-export default FullHeightContainer;
+export default GridContainer;
