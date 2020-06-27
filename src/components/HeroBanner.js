@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -53,12 +52,6 @@ const HeroBanner = () => {
       </Container>
     </div>
   );
-};
-
-HeroBanner.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
 };
 
 export default HeroBanner;
