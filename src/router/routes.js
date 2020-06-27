@@ -1,4 +1,4 @@
 export const HOME = '/';
 export const LOGIN = '/login';
-export const SIGNUP = '/sign-up';
+export const SIGNUP = '/signup';
 export const SESSIONS = '/sessions';
