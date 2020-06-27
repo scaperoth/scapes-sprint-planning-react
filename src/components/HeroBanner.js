@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -19,12 +18,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const HeroBanner = ({ history }) => {
+const HeroBanner = () => {
   const classes = useStyles();
-
-  const routeToLogin = () => {
-    history.push('login');
-  };
 
   return (
     <div className={classes.heroContent}>
@@ -66,4 +61,4 @@ HeroBanner.propTypes = {
   }).isRequired,
 };
 
-export default withRouter(HeroBanner);
+export default HeroBanner;

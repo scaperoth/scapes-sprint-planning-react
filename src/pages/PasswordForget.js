@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Register = () => {
+const PasswordForget = () => {
   const classes = useStyles();
 
   return (
@@ -36,7 +36,7 @@ const Register = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Reset Password
         </Typography>
         <ForgotPasswordForm />
       </div>
@@ -44,4 +44,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default PasswordForget;
