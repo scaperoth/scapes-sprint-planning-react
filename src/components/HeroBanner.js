@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import * as Routes from '../constants/routes';
 
 const useStyles = makeStyles(theme => ({
   heroContent: {
@@ -43,12 +44,12 @@ const HeroBanner = ({ history }) => {
         <div className={classes.heroButtons}>
           <Grid container spacing={2} justify="center">
             <Grid item>
-              <Button variant="contained" color="primary">
+              <Button href={Routes.SIGNUP} variant="contained" color="primary">
                 Sign Up
               </Button>
             </Grid>
             <Grid item>
-              <Button onClick={routeToLogin} variant="outlined" color="primary">
+              <Button href={Routes.LOGIN} variant="outlined" color="primary">
                 Log In
               </Button>
             </Grid>
