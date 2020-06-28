@@ -35,5 +35,6 @@ module.exports = {
     'global-require': 0,
     'react/jsx-fragments': 0,
     'react/jsx-wrap-multilines': 0,
+    'react/jsx-curly-brace-presence': 0
   },
 };

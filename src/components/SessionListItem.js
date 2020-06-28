@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import GridContainerItem from './GridContainerItem';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,9 +17,9 @@ const useStyles = makeStyles(theme => ({
 const SessionListItem = ({ children }) => {
   const classes = useStyles();
   return (
-    <GridContainerItem>
+    <Grid item xs>
       <div className={classes.root}>{children}</div>
-    </GridContainerItem>
+    </Grid>
   );
 };
 
