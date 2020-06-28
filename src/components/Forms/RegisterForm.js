@@ -53,6 +53,7 @@ const RegisterForm = () => {
   const submit = async e => {
     e.preventDefault();
     setLoading(true);
+    setError('');
     const { payload } = registerUser(formFields);
 
     try {
