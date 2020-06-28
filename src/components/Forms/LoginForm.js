@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import * as Routes from '../../constants/routes';
 import { login } from '../../state/actions/auth.actions';
@@ -29,11 +29,15 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(-1),
     marginLeft: theme.spacing(-1),
   },
+  error: {
+    color: theme.palette.error.main,
+  },
 }));
 
 const LoginForm = () => {
-  const loading = useSelector(state => state.auth.loading);
-  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
+  const [error, setError] = useState();
   const [formFields, setFormFields] = useState({
     email: '',
     password: '',
@@ -45,13 +49,40 @@ const LoginForm = () => {
     setFormFields({ ...formFields, [name]: value });
   };
 
-  const submit = e => {
+  const parseError = err => {
+    const { message } = err;
+    if (message.toLowerCase().includes('email')) {
+      setFormErrors({ email: 'Invalid email address' });
+    } else if (message.toLowerCase().includes('password')) {
+      setFormErrors({ password: message });
+    } else {
+      setError(err.message);
+    }
+  };
+
+  const submit = async e => {
     e.preventDefault();
-    dispatch(login(formFields));
+    setError();
+    setFormErrors({});
+
+    setLoading(true);
+    const { payload } = login(formFields);
+    try {
+      await payload;
+    } catch (err) {
+      parseError(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <form className={classes.form} noValidate onSubmit={submit}>
+      {error && (
+        <Grid item xs={12}>
+          <Typography className={classes.error}>{error}</Typography>
+        </Grid>
+      )}
       <TextField
         variant="outlined"
         margin="normal"
@@ -65,6 +96,8 @@ const LoginForm = () => {
         onChange={onChange}
         disabled={loading}
         value={formFields.email}
+        helperText={formErrors.email}
+        error={!!formErrors.email}
       />
       <TextField
         variant="outlined"
@@ -79,6 +112,8 @@ const LoginForm = () => {
         onChange={onChange}
         disabled={loading}
         value={formFields.password}
+        helperText={formErrors.password}
+        error={!!formErrors.password}
       />
 
       <div className={classes.wrapper}>

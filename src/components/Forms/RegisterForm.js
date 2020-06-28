@@ -7,7 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import * as Routes from '../../constants/routes';
-import { registerUser } from '../../state/actions/registration.actions';
+import { registerUser } from '../../state/actions/auth.actions';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -81,7 +81,6 @@ const RegisterForm = () => {
 
   const parseError = err => {
     const { message } = err;
-    console.log(message);
     if (message.toLowerCase().includes('email')) {
       setFormErrors({ email: message });
     } else if (message.toLowerCase().includes('password')) {
