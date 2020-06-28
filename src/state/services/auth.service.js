@@ -1,11 +1,9 @@
-import { fakeLatency } from './helpers';
+import firebase from './firebase';
 
-export const login = async () => {
-  await fakeLatency(1000, 3000);
-  return {};
+export const login = async (email, password) => {
+  return firebase.doSignInWithEmailAndPassword(email, password);
 };
 
 export const logout = async () => {
-  await fakeLatency(1000, 3000);
-  return {};
+  return firebase.doSignOut();
 };

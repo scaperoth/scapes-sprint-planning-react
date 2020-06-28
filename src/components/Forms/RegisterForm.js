@@ -37,29 +37,74 @@ const useStyles = makeStyles(theme => ({
 const RegisterForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
+  const [formErrors, setFormErrors] = useState({});
   const [formFields, setFormFields] = useState({
-    username: '',
     email: '',
     password: '',
     passwordConfirm: '',
   });
   const classes = useStyles();
 
+  const validatePassword = ({ password, passwordConfirm }) => {
+    if (password !== passwordConfirm) {
+      return 'Passwords must match';
+    }
+    return false;
+  };
+
+  const validateEmail = ({ email }) => {
+    const isValidEmail = /.+@.+\..+/.test(email);
+    if (email && !isValidEmail) {
+      return 'Please enter a valid email';
+    }
+    return false;
+  };
+
+  const validateForm = fieldsToValidate => {
+    const [password, email] = [
+      validatePassword(fieldsToValidate),
+      validateEmail(fieldsToValidate),
+    ];
+    setFormErrors({ email, password });
+  };
+
+  const hasErrors = () =>
+    Object.keys(formErrors).some(key => !!formErrors[key]);
+
   const onChange = e => {
     const { name, value } = e.target;
-    setFormFields({ ...formFields, [name]: value });
+    setFormErrors({});
+    const newValues = { ...formFields, [name]: value };
+    setFormFields(newValues);
+    validateForm(newValues);
+  };
+
+  const parseError = err => {
+    const { message } = err;
+    console.log(message);
+    if (message.toLowerCase().includes('email')) {
+      setFormErrors({ email: message });
+    } else if (message.toLowerCase().includes('password')) {
+      setFormErrors({ password: message });
+    } else {
+      setError(err.message);
+    }
   };
 
   const submit = async e => {
     e.preventDefault();
-    setLoading(true);
-    setError('');
-    const { payload } = registerUser(formFields);
+    validateForm(formFields);
+    if (hasErrors()) {
+      setError('Please fix all form errors before continuing');
+      return;
+    }
 
+    setLoading(true);
+    const { payload } = registerUser(formFields);
     try {
       await payload;
     } catch (err) {
-      setError(err);
+      parseError(err);
     } finally {
       setLoading(false);
     }
@@ -70,26 +115,9 @@ const RegisterForm = () => {
       <Grid container spacing={2}>
         {error && (
           <Grid item xs={12}>
-            <Typography className={classes.error}>
-              Error: {error.message}
-            </Typography>
+            <Typography className={classes.error}>{error}</Typography>
           </Grid>
         )}
-        <Grid item xs={12}>
-          <TextField
-            variant="outlined"
-            required
-            fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
-            autoFocus
-            onChange={onChange}
-            disabled={loading}
-            value={formFields.username}
-          />
-        </Grid>
         <Grid item xs={12}>
           <TextField
             variant="outlined"
@@ -102,6 +130,8 @@ const RegisterForm = () => {
             onChange={onChange}
             disabled={loading}
             value={formFields.email}
+            helperText={formErrors.email}
+            error={!!formErrors.email}
           />
         </Grid>
         <Grid item xs={12}>
@@ -117,6 +147,7 @@ const RegisterForm = () => {
             onChange={onChange}
             disabled={loading}
             value={formFields.password}
+            helperText="6 Character Minimum"
           />
         </Grid>
         <Grid item xs={12}>
@@ -132,6 +163,8 @@ const RegisterForm = () => {
             onChange={onChange}
             disabled={loading}
             value={formFields.passwordConfirm}
+            helperText={formErrors.password}
+            error={!!formErrors.password}
           />
         </Grid>
       </Grid>

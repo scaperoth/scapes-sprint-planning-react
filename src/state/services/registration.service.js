@@ -1,10 +1,5 @@
-import { fakeLatency } from './helpers';
+import firebase from './firebase';
 
-export const registerUser = async username => {
-  await fakeLatency(1000, 3000);
-
-  if (username === 'test') {
-    return Promise.reject(new Error('TEST'));
-  }
-  return {};
+export const registerUser = async (email, password) => {
+  return firebase.doCreateUserWithEmailAndPassword(email, password);
 };

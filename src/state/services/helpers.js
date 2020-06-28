@@ -1,7 +1,7 @@
 export const generateRandomId = (padding = 9) => {
-  const idRange = Number("".padStart("9", padding));
+  const idRange = Number(''.padStart('9', padding));
   const randomId = Math.floor(Math.random() * Math.floor(idRange));
-  return randomId.toString().padStart("0");
+  return randomId.toString().padStart('0');
 };
 
 export const fakeLatency = async (minWaitInMs = 200, maxWaitInMs = 500) => {
