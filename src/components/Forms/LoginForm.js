@@ -50,10 +50,10 @@ const LoginForm = () => {
   };
 
   const parseError = err => {
-    const { message } = err;
-    if (message.toLowerCase().includes('email')) {
+    const { message, code } = err;
+    if (code.includes('email')) {
       setFormErrors({ email: 'Invalid email address' });
-    } else if (message.toLowerCase().includes('password')) {
+    } else if (code.includes('password')) {
       setFormErrors({ password: message });
     } else {
       setError(err.message);

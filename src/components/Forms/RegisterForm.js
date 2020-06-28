@@ -80,10 +80,10 @@ const RegisterForm = () => {
   };
 
   const parseError = err => {
-    const { message } = err;
-    if (message.toLowerCase().includes('email')) {
+    const { message, code } = err;
+    if (code.includes('email')) {
       setFormErrors({ email: message });
-    } else if (message.toLowerCase().includes('password')) {
+    } else if (code.includes('password')) {
       setFormErrors({ password: message });
     } else {
       setError(err.message);
@@ -103,6 +103,7 @@ const RegisterForm = () => {
     try {
       await payload;
     } catch (err) {
+      // TODO: Handle this better with custom errors
       parseError(err);
     } finally {
       setLoading(false);
