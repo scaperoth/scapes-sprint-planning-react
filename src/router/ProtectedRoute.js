@@ -10,12 +10,12 @@ const ProtectedRoute = ({ component: Component, ...rest }) => (
       <Route
         {...rest}
         render={props =>
-          auth.loggedin !== null ? (
+          auth.loggedin ? (
             <div>
               <Component {...props} />
             </div>
           ) : (
-            <Redirect to={{ pathname: Routes.LOGIN }} />
+            <Redirect to={{ pathname: Routes.LOGOUT }} />
           )
         }
       />

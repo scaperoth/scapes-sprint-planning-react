@@ -13,9 +13,11 @@ export class AuthError extends Error {
 
     const { message, code } = err;
     if (code.includes('email')) {
-      this.fields.email = 'Invalid email address';
+      this.fields.email = message;
     } else if (code.includes('password')) {
       this.fields.password = message;
+    } else {
+      this.fields.global = err.message;
     }
   }
 }

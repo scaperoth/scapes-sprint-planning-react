@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import * as Routes from '../../constants/routes';
 import { registerUser } from '../../state/actions/registration.actions';
+import { login } from '../../state/actions/auth.actions';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -39,8 +40,7 @@ const useStyles = makeStyles(theme => ({
 const RegisterForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const loading = useSelector(state => state.registration.loading);
-  const errors = useSelector(state => state.registration.errors);
+  const [loading, setLoading] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const [formFields, setFormFields] = useState({
     email: '',
@@ -48,10 +48,6 @@ const RegisterForm = () => {
     passwordConfirm: '',
   });
   const classes = useStyles();
-
-  useEffect(() => {
-    setFormErrors(errors);
-  }, [errors]);
 
   const validatePassword = ({ password, passwordConfirm }) => {
     if (password !== passwordConfirm) {
@@ -76,9 +72,6 @@ const RegisterForm = () => {
     setFormErrors({ email, password });
   };
 
-  const hasErrors = () =>
-    Object.keys(formErrors).some(key => !!formErrors[key]);
-
   const onChange = e => {
     const { name, value } = e.target;
     setFormErrors({});
@@ -89,15 +82,17 @@ const RegisterForm = () => {
 
   const submit = async e => {
     e.preventDefault();
+    setFormErrors({});
     validateForm(formFields);
-    if (hasErrors()) {
-      setFormErrors({
-        ...formErrors,
-        message: 'Please fix all form errors before continuing',
-      });
-      return;
+    setLoading(true);
+    try {
+      await dispatch(registerUser(formFields));
+      await dispatch(login(formFields));
+      history.push(Routes.REGISTER_REDIRECT);
+    } catch (err) {
+      setFormErrors(err.fields);
+      setLoading(false);
     }
-    dispatch(registerUser(formFields, history));
   };
 
   return (

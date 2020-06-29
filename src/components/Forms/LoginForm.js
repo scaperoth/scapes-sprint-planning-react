@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -39,8 +39,8 @@ const useStyles = makeStyles(theme => ({
 const LoginForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const loading = useSelector(state => state.auth.loading);
-  const formErrors = useSelector(state => state.auth.errors);
+  const [loading, setLoading] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
   const [formFields, setFormFields] = useState({
     email: '',
     password: '',
@@ -54,7 +54,16 @@ const LoginForm = () => {
 
   const submit = async e => {
     e.preventDefault();
-    dispatch(login(formFields, history));
+    setLoading(true);
+    setFormErrors({});
+    try {
+      await dispatch(login(formFields));
+      history.push(Routes.LOGIN_REDIRECT);
+    } catch (err) {
+      console.log('err', err)
+      setFormErrors(err.fields);
+      setLoading(false);
+    }
   };
 
   return (

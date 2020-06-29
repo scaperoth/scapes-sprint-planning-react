@@ -1,17 +1,12 @@
-import {
-  LOGIN_TYPE,
-  LOGOUT_TYPE,
-  REGISTRATION_TYPE,
-} from '../actions/auth.actions';
+import { LOGIN_TYPE, LOGOUT_TYPE } from '../actions/auth.actions';
 import Storage, { LOGIN_KEY } from '../storage';
 import { buildActionRequests } from '../helpers';
 
 const loginActions = buildActionRequests(LOGIN_TYPE);
 const logoutActions = buildActionRequests(LOGOUT_TYPE);
-const registerActions = buildActionRequests(REGISTRATION_TYPE);
 
 const initialState = {
-  loggedin: Storage.getItem(LOGIN_KEY),
+  loggedin: Storage.getItem(LOGIN_KEY) === 'true',
   loading: false,
   errors: {},
 };
@@ -41,24 +36,6 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         loggedin: false,
-      };
-    case registerActions.pending.type:
-      return {
-        ...state,
-        loading: true,
-        errors: {},
-      };
-    case registerActions.fulfilled.type:
-      return {
-        ...state,
-        loggedin: true,
-      };
-    case registerActions.rejected.type:
-      return {
-        ...state,
-        loggedin: false,
-        loading: false,
-        errors: action.payload,
       };
     default:
       return state;

@@ -5,14 +5,13 @@ import { AuthService } from '../state/services';
 import { AuthUserContext } from '../components/Context';
 import Pages from '../pages';
 import ProtectedRoute from './ProtectedRoute';
-import * as ROUTES from '../constants/routes';
-import { logout } from '../state/services/auth.service';
+import * as Routes from '../constants/routes';
+import { logout } from '../state/actions/auth.actions';
 
 const AppRouter = () => {
-  const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
   const [authUser, setAuthUser] = useState();
-
   useEffect(() => {
     AuthService.onAuthChanged(authenticatedUser => {
       if (authenticatedUser) {
@@ -22,25 +21,21 @@ const AppRouter = () => {
         dispatch(logout());
       }
     });
-  }, [dispatch]);
+  }, []);
 
   return (
     <AuthUserContext.Provider value={{ authUser, auth }}>
       <Router>
         <Switch>
-          <Route exact path={ROUTES.HOME} component={Pages.Home} />
-          <Route exact path={ROUTES.LOGIN} component={Pages.Login} />
-          <Route exact path={ROUTES.SIGNUP} component={Pages.Register} />
+          <Route exact path={Routes.HOME} component={Pages.Home} />
+          <Route path={Routes.LOGIN} component={Pages.Login} />
+          <Route path={Routes.LOGOUT} component={Pages.Logout} />
+          <Route path={Routes.SIGNUP} component={Pages.Register} />
           <Route
-            exact
-            path={ROUTES.PASSWORD_FORGET}
+            path={Routes.PASSWORD_FORGET}
             component={Pages.PasswordForget}
           />
-          <ProtectedRoute
-            exact
-            path={ROUTES.SESSIONS}
-            component={Pages.Sessions}
-          />
+          <ProtectedRoute path={Routes.SESSIONS} component={Pages.Sessions} />
           <Route component={Pages.NotFound} />
         </Switch>
       </Router>

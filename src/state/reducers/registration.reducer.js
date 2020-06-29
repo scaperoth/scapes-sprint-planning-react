@@ -1,4 +1,4 @@
-import { REGISTRATION_TYPE } from '../actions/auth.actions';
+import { REGISTRATION_TYPE } from '../actions/registration.actions';
 import { buildActionRequests } from '../helpers';
 
 const registerActions = buildActionRequests(REGISTRATION_TYPE);
