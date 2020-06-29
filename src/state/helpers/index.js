@@ -1,3 +1,16 @@
+export const buildActionRequests = actionTypeName => {
+  const pending = {
+    type: `${actionTypeName}_PENDING`,
+  };
+  const fulfilled = {
+    type: `${actionTypeName}_FULFILLED`,
+  };
+  const rejected = {
+    type: `${actionTypeName}_REJECTED`,
+  };
+  return { pending, fulfilled, rejected };
+};
+
 export const generateRandomId = (padding = 9) => {
   const idRange = Number(''.padStart('9', padding));
   const randomId = Math.floor(Math.random() * Math.floor(idRange));

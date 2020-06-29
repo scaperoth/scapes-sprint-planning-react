@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import * as ROUTES from '../constants/routes';
-import Pages from '../pages';
-import ProtectedRoute from './ProtectedRoute';
 import { AuthService } from '../state/services';
 import { AuthUserContext } from '../components/Context';
+import Pages from '../pages';
+import ProtectedRoute from './ProtectedRoute';
+import * as ROUTES from '../constants/routes';
+import { logout } from '../state/services/auth.service';
 
 const AppRouter = () => {
-  const [authUser, setAuthUser] = useState(true);
+  const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+  const [authUser, setAuthUser] = useState();
+
   useEffect(() => {
     AuthService.onAuthChanged(authenticatedUser => {
       if (authenticatedUser) {
         setAuthUser(authenticatedUser);
       } else {
         setAuthUser(null);
+        dispatch(logout());
       }
     });
-  }, [authUser]);
+  }, [dispatch]);
 
   return (
-    <AuthUserContext.Provider value={authUser}>
+    <AuthUserContext.Provider value={{ authUser, auth }}>
       <Router>
         <Switch>
           <Route exact path={ROUTES.HOME} component={Pages.Home} />

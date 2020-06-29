@@ -39,9 +39,9 @@ const HeroBanner = () => {
         </Typography>
         <div className={classes.heroButtons}>
           <AuthUserContext.Consumer>
-            {authUser => (
+            {({ auth }) => (
               <Grid container spacing={2} justify="center">
-                {authUser.email ? (
+                {auth.loggedin ? (
                   <Grid item>
                     <Button
                       component={RouterLink}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { withRouter, Link as RouterLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
@@ -36,10 +36,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const LoginForm = ({ history }) => {
-  const [loading, setLoading] = useState(false);
-  const [formErrors, setFormErrors] = useState({});
-  const [error, setError] = useState();
+const LoginForm = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.auth.loading);
+  const formErrors = useSelector(state => state.auth.errors);
   const [formFields, setFormFields] = useState({
     email: '',
     password: '',
@@ -51,38 +52,16 @@ const LoginForm = ({ history }) => {
     setFormFields({ ...formFields, [name]: value });
   };
 
-  const parseError = err => {
-    const { message, code } = err;
-    if (code.includes('email')) {
-      setFormErrors({ email: 'Invalid email address' });
-    } else if (code.includes('password')) {
-      setFormErrors({ password: message });
-    } else {
-      setError(err.message);
-    }
-  };
-
   const submit = async e => {
     e.preventDefault();
-    setError();
-    setFormErrors({});
-
-    setLoading(true);
-    const { payload } = login(formFields);
-    try {
-      await payload;
-      history.push(Routes.HOME);
-    } catch (err) {
-      parseError(err);
-      setLoading(false);
-    }
+    dispatch(login(formFields, history));
   };
 
   return (
     <form className={classes.form} noValidate onSubmit={submit}>
-      {error && (
+      {formErrors.global && (
         <Grid item xs={12}>
-          <Typography className={classes.error}>{error}</Typography>
+          <Typography className={classes.error}>{formErrors.global}</Typography>
         </Grid>
       )}
       <TextField
@@ -135,7 +114,11 @@ const LoginForm = ({ history }) => {
       </div>
       <Grid container>
         <Grid item xs>
-          <Link component={RouterLink} to={Routes.PASSWORD_FORGET} variant="body2">
+          <Link
+            component={RouterLink}
+            to={Routes.PASSWORD_FORGET}
+            variant="body2"
+          >
             Forgot password?
           </Link>
         </Grid>
@@ -149,10 +132,4 @@ const LoginForm = ({ history }) => {
   );
 };
 
-LoginForm.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-};
-
-export default withRouter(LoginForm);
+export default LoginForm;

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { withRouter, Link as RouterLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
@@ -9,7 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import * as Routes from '../../constants/routes';
-import { registerUser, login } from '../../state/actions/auth.actions';
+import { registerUser } from '../../state/actions/registration.actions';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -36,9 +36,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const RegisterForm = ({ history }) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState();
+const RegisterForm = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.registration.loading);
+  const errors = useSelector(state => state.registration.errors);
   const [formErrors, setFormErrors] = useState({});
   const [formFields, setFormFields] = useState({
     email: '',
@@ -46,6 +48,10 @@ const RegisterForm = ({ history }) => {
     passwordConfirm: '',
   });
   const classes = useStyles();
+
+  useEffect(() => {
+    setFormErrors(errors);
+  }, [errors]);
 
   const validatePassword = ({ password, passwordConfirm }) => {
     if (password !== passwordConfirm) {
@@ -81,49 +87,27 @@ const RegisterForm = ({ history }) => {
     validateForm(newValues);
   };
 
-  const parseError = err => {
-    if (!err.code) {
-      setError(err.message);
-      return;
-    }
-
-    const { message, code } = err;
-    if (code.includes('email')) {
-      setFormErrors({ email: message });
-    } else if (code.includes('password')) {
-      setFormErrors({ password: message });
-    } else {
-      setError(err.message);
-    }
-  };
-
   const submit = async e => {
     e.preventDefault();
     validateForm(formFields);
     if (hasErrors()) {
-      setError('Please fix all form errors before continuing');
+      setFormErrors({
+        ...formErrors,
+        message: 'Please fix all form errors before continuing',
+      });
       return;
     }
-
-    setLoading(true);
-    const { payload } = registerUser(formFields);
-    try {
-      await payload;
-      await login(formFields).payload;
-      history.push(Routes.HOME);
-    } catch (err) {
-      // TODO: Handle this better with custom errors
-      parseError(err);
-      setLoading(false);
-    }
+    dispatch(registerUser(formFields, history));
   };
 
   return (
     <form className={classes.form} noValidate onSubmit={submit}>
       <Grid container spacing={2}>
-        {error && (
+        {formErrors.global && (
           <Grid item xs={12}>
-            <Typography className={classes.error}>{error}</Typography>
+            <Typography className={classes.error}>
+              {formErrors.global}
+            </Typography>
           </Grid>
         )}
         <Grid item xs={12}>
@@ -202,10 +186,4 @@ const RegisterForm = ({ history }) => {
   );
 };
 
-RegisterForm.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-};
-
-export default withRouter(RegisterForm);
+export default RegisterForm;
