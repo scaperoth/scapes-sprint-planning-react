@@ -1,9 +1,12 @@
 import firebase from './firebase';
 
-export const registerUser = async (email, password) =>
+export const registerUser = (email, password) =>
   firebase.doCreateUserWithEmailAndPassword(email, password);
 
-export const login = async (email, password) =>
+export const login = (email, password) =>
   firebase.doSignInWithEmailAndPassword(email, password);
 
-export const logout = async () => firebase.doSignOut();
+export const logout = () => firebase.doSignOut();
+
+export const onAuthChanged = callback =>
+  firebase.doOnAuthStateChanged(callback);

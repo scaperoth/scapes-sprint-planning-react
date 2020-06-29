@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
@@ -34,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const LoginForm = () => {
+const LoginForm = ({ history }) => {
   const [loading, setLoading] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const [error, setError] = useState();
@@ -69,9 +71,9 @@ const LoginForm = () => {
     const { payload } = login(formFields);
     try {
       await payload;
+      history.push(Routes.HOME);
     } catch (err) {
       parseError(err);
-    } finally {
       setLoading(false);
     }
   };
@@ -147,4 +149,10 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+LoginForm.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
+
+export default withRouter(LoginForm);

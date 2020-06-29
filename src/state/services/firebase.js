@@ -18,6 +18,13 @@ class Firebase {
     app.initializeApp(firebaseConfig);
     this.auth = app.auth();
     this.analytics = app.analytics();
+
+    this.currentUser = this.auth.currentUser;
+    this.auth.onAuthStateChanged(user => {
+      if (user) {
+        console.log(this.auth.currentUser);
+      }
+    });
   }
 
   doCreateUserWithEmailAndPassword(email, password) {
@@ -38,6 +45,14 @@ class Firebase {
 
   doPasswordUpdate(password) {
     return this.auth.currentUser.updatePassword(password);
+  }
+
+  doGetCurrentUser() {
+    return this.currentUser;
+  }
+
+  doOnAuthStateChanged(callback) {
+    this.auth.onAuthStateChanged(callback);
   }
 }
 

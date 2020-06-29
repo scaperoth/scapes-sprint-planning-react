@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
@@ -7,7 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import * as Routes from '../../constants/routes';
-import { registerUser } from '../../state/actions/auth.actions';
+import { registerUser, login } from '../../state/actions/auth.actions';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -34,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const RegisterForm = () => {
+const RegisterForm = ({ history }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
   const [formErrors, setFormErrors] = useState({});
@@ -80,6 +82,11 @@ const RegisterForm = () => {
   };
 
   const parseError = err => {
+    if (!err.code) {
+      setError(err.message);
+      return;
+    }
+
     const { message, code } = err;
     if (code.includes('email')) {
       setFormErrors({ email: message });
@@ -102,10 +109,11 @@ const RegisterForm = () => {
     const { payload } = registerUser(formFields);
     try {
       await payload;
+      await login(formFields).payload;
+      history.push(Routes.HOME);
     } catch (err) {
       // TODO: Handle this better with custom errors
       parseError(err);
-    } finally {
       setLoading(false);
     }
   };
@@ -194,4 +202,10 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+RegisterForm.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
+
+export default withRouter(RegisterForm);
