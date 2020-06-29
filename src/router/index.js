@@ -7,8 +7,7 @@ import { AuthService } from '../state/services';
 import { AuthUserContext } from '../components/Context';
 
 const AppRouter = () => {
-  const [authUser, setAuthUser] = useState();
-
+  const [authUser, setAuthUser] = useState(true);
   useEffect(() => {
     AuthService.onAuthChanged(authenticatedUser => {
       if (authenticatedUser) {
@@ -17,7 +16,7 @@ const AppRouter = () => {
         setAuthUser(null);
       }
     });
-  }, []);
+  }, [authUser]);
 
   return (
     <AuthUserContext.Provider value={authUser}>

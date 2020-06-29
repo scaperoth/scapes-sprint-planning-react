@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link as RouterLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
@@ -193,7 +193,7 @@ const RegisterForm = ({ history }) => {
       </div>
       <Grid container justify="flex-end">
         <Grid item>
-          <Link href={Routes.LOGIN} variant="body2">
+          <Link component={RouterLink} to={Routes.LOGIN} variant="body2">
             Already have an account? Sign in
           </Link>
         </Grid>

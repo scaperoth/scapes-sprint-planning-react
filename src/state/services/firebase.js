@@ -18,20 +18,14 @@ class Firebase {
     app.initializeApp(firebaseConfig);
     this.auth = app.auth();
     this.analytics = app.analytics();
-
-    this.currentUser = this.auth.currentUser;
-    this.auth.onAuthStateChanged(user => {
-      if (user) {
-        console.log(this.auth.currentUser);
-      }
-    });
   }
 
   doCreateUserWithEmailAndPassword(email, password) {
     return this.auth.createUserWithEmailAndPassword(email, password);
   }
 
-  doSignInWithEmailAndPassword(email, password) {
+  async doSignInWithEmailAndPassword(email, password) {
+    await this.auth.setPersistence(app.auth.Auth.Persistence.SESSION);
     return this.auth.signInWithEmailAndPassword(email, password);
   }
 
@@ -47,8 +41,12 @@ class Firebase {
     return this.auth.currentUser.updatePassword(password);
   }
 
-  doGetCurrentUser() {
-    return this.currentUser;
+  async doGetCurrentUser() {
+    await this.auth.setPersistence(app.auth.Auth.Persistence.SESSION);
+    if (!this.auth.currentUser) {
+      return null;
+    }
+    return this.auth.currentUser;
   }
 
   doOnAuthStateChanged(callback) {

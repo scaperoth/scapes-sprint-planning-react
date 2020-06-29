@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import * as Routes from '../constants/routes';
 import { AuthUserContext } from '../components/Context';
+import LoadingOverlay from '../components/Layout/LoadingOverlay';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => (
   <AuthUserContext.Consumer>
@@ -11,7 +12,10 @@ const ProtectedRoute = ({ component: Component, ...rest }) => (
         {...rest}
         render={props =>
           authUser !== null ? (
-            <Component {...props} />
+            <div>
+              <LoadingOverlay loading={authUser === true} />
+              <Component {...props} />
+            </div>
           ) : (
             <Redirect to={{ pathname: Routes.LOGIN }} />
           )

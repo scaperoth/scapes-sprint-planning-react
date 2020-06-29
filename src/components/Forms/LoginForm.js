@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link as RouterLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
@@ -135,12 +135,12 @@ const LoginForm = ({ history }) => {
       </div>
       <Grid container>
         <Grid item xs>
-          <Link href={Routes.PASSWORD_FORGET} variant="body2">
+          <Link component={RouterLink} to={Routes.PASSWORD_FORGET} variant="body2">
             Forgot password?
           </Link>
         </Grid>
         <Grid item>
-          <Link href={Routes.SIGNUP} variant="body2">
+          <Link component={RouterLink} to={Routes.SIGNUP} variant="body2">
             {"Don't have an account? Sign Up"}
           </Link>
         </Grid>
