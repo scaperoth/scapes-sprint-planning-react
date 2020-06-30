@@ -1,19 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import * as ROUTES from '../constants/routes';
+import { AuthService } from '../state/services';
+import { AuthUserContext } from '../components/Context';
 import Pages from '../pages';
+import ProtectedRoute from './ProtectedRoute';
+import * as Routes from '../constants/routes';
+import { logout } from '../state/actions/auth.actions';
 
-const AppRouter = () => (
-  <Router>
-    <Switch>
-      <Route exact path={ROUTES.HOME} component={Pages.Home} />
-      <Route exact path={ROUTES.LOGIN} component={Pages.Login} />
-      <Route exact path={ROUTES.SIGNUP} component={Pages.Register} />
-      <Route exact path={ROUTES.PASSWORD_FORGET} component={Pages.PasswordForget} />
-      <Route exact path={ROUTES.SESSIONS} component={Pages.Sessions} />
-      <Route component={Pages.NotFound} />
-    </Switch>
-  </Router>
-);
+const AppRouter = () => {
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+  const [authUser, setAuthUser] = useState();
+  useEffect(() => {
+    AuthService.onAuthChanged(authenticatedUser => {
+      if (authenticatedUser) {
+        setAuthUser(authenticatedUser);
+      } else {
+        setAuthUser(null);
+        dispatch(logout());
+      }
+    });
+  }, []);
+
+  return (
+    <AuthUserContext.Provider value={{ authUser, auth }}>
+      <Router>
+        <Switch>
+          <Route exact path={Routes.HOME} component={Pages.Home} />
+          <Route path={Routes.LOGIN} component={Pages.Login} />
+          <Route path={Routes.LOGOUT} component={Pages.Logout} />
+          <Route path={Routes.SIGNUP} component={Pages.Register} />
+          <Route
+            path={Routes.PASSWORD_FORGET}
+            component={Pages.PasswordForget}
+          />
+          <ProtectedRoute path={Routes.SESSIONS} component={Pages.Sessions} />
+          <Route component={Pages.NotFound} />
+        </Switch>
+      </Router>
+    </AuthUserContext.Provider>
+  );
+};
 
 export default AppRouter;

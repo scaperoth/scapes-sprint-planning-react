@@ -24,7 +24,7 @@ const SessionListItem = ({ children }) => {
 };
 
 SessionListItem.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.array])
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.array, PropTypes.string])
     .isRequired,
 };
 

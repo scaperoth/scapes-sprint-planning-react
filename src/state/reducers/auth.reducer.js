@@ -1,51 +1,41 @@
 import { LOGIN_TYPE, LOGOUT_TYPE } from '../actions/auth.actions';
+import Storage, { LOGIN_KEY } from '../storage';
+import { buildActionRequests } from '../helpers';
+
+const loginActions = buildActionRequests(LOGIN_TYPE);
+const logoutActions = buildActionRequests(LOGOUT_TYPE);
 
 const initialState = {
+  loggedin: Storage.getItem(LOGIN_KEY) === 'true',
   loading: false,
-  loggedin: false,
-  error: false,
+  errors: {},
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case `${LOGIN_TYPE}_PENDING`:
+    case loginActions.pending.type:
       return {
         ...state,
-        error: false,
         loading: true,
+        errors: {},
       };
-    case `${LOGIN_TYPE}_FULFILLED`:
+    case loginActions.fulfilled.type:
       return {
         ...state,
-        error: false,
-        loading: false,
         loggedin: true,
       };
-    case `${LOGIN_TYPE}_REJECTED`:
+    case loginActions.rejected.type:
       return {
         ...state,
-        error: action.payload,
-        loading: false,
         loggedin: false,
-      };
-    case `${LOGOUT_TYPE}_PENDING`:
-      return {
-        ...state,
-        error: false,
-        loading: true,
-      };
-    case `${LOGOUT_TYPE}_FULFILLED`:
-      return {
-        ...state,
-        error: false,
         loading: false,
+        errors: action.payload,
+      };
+    case logoutActions.fulfilled.type:
+    case logoutActions.rejected.type:
+      return {
+        ...state,
         loggedin: false,
-      };
-    case `${LOGOUT_TYPE}_REJECTED`:
-      return {
-        ...state,
-        error: action.payload,
-        loading: false,
       };
     default:
       return state;

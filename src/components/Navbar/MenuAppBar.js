@@ -79,8 +79,9 @@ const MenuAppBar = () => {
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
+            onClick={toggleDrawer(true)}
           >
-            <MenuIcon onClick={toggleDrawer(true)} />
+            <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             Scapes Sprint Planning

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -29,12 +30,12 @@ const SubMenu = ({ onClick }) => {
       onKeyDown={onClick()}
     >
       <List>
-        {menuItems.map((link, index) => (
-          <ListItem button key={link.name}>
+        {menuItems.map((item, index) => (
+          <ListItem button component={Link} to={item.link} key={item.name}>
             <ListItemIcon>
               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
             </ListItemIcon>
-            <ListItemText primary={link.name} />
+            <ListItemText primary={item.name} />
           </ListItem>
         ))}
       </List>

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
@@ -8,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import * as Routes from '../../constants/routes';
 import { registerUser } from '../../state/actions/registration.actions';
+import { login } from '../../state/actions/auth.actions';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -35,32 +38,59 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const RegisterForm = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState();
+  const [formErrors, setFormErrors] = useState({});
   const [formFields, setFormFields] = useState({
-    username: '',
     email: '',
     password: '',
     passwordConfirm: '',
   });
   const classes = useStyles();
 
+  const validatePassword = ({ password, passwordConfirm }) => {
+    if (password !== passwordConfirm) {
+      return 'Passwords must match';
+    }
+    return false;
+  };
+
+  const validateEmail = ({ email }) => {
+    const isValidEmail = /.+@.+\..+/.test(email);
+    if (email && !isValidEmail) {
+      return 'Please enter a valid email';
+    }
+    return false;
+  };
+
+  const validateForm = fieldsToValidate => {
+    const [password, email] = [
+      validatePassword(fieldsToValidate),
+      validateEmail(fieldsToValidate),
+    ];
+    setFormErrors({ email, password });
+  };
+
   const onChange = e => {
     const { name, value } = e.target;
-    setFormFields({ ...formFields, [name]: value });
+    setFormErrors({});
+    const newValues = { ...formFields, [name]: value };
+    setFormFields(newValues);
+    validateForm(newValues);
   };
 
   const submit = async e => {
     e.preventDefault();
+    setFormErrors({});
+    validateForm(formFields);
     setLoading(true);
-    setError('');
-    const { payload } = registerUser(formFields);
-
     try {
-      await payload;
+      await dispatch(registerUser(formFields));
+      await dispatch(login(formFields));
+      history.push(Routes.REGISTER_REDIRECT);
     } catch (err) {
-      setError(err);
-    } finally {
+      setFormErrors(err.fields);
       setLoading(false);
     }
   };
@@ -68,28 +98,13 @@ const RegisterForm = () => {
   return (
     <form className={classes.form} noValidate onSubmit={submit}>
       <Grid container spacing={2}>
-        {error && (
+        {formErrors.global && (
           <Grid item xs={12}>
             <Typography className={classes.error}>
-              Error: {error.message}
+              {formErrors.global}
             </Typography>
           </Grid>
         )}
-        <Grid item xs={12}>
-          <TextField
-            variant="outlined"
-            required
-            fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
-            autoFocus
-            onChange={onChange}
-            disabled={loading}
-            value={formFields.username}
-          />
-        </Grid>
         <Grid item xs={12}>
           <TextField
             variant="outlined"
@@ -102,6 +117,8 @@ const RegisterForm = () => {
             onChange={onChange}
             disabled={loading}
             value={formFields.email}
+            helperText={formErrors.email}
+            error={!!formErrors.email}
           />
         </Grid>
         <Grid item xs={12}>
@@ -117,6 +134,7 @@ const RegisterForm = () => {
             onChange={onChange}
             disabled={loading}
             value={formFields.password}
+            helperText="6 Character Minimum"
           />
         </Grid>
         <Grid item xs={12}>
@@ -132,6 +150,8 @@ const RegisterForm = () => {
             onChange={onChange}
             disabled={loading}
             value={formFields.passwordConfirm}
+            helperText={formErrors.password}
+            error={!!formErrors.password}
           />
         </Grid>
       </Grid>
@@ -152,7 +172,7 @@ const RegisterForm = () => {
       </div>
       <Grid container justify="flex-end">
         <Grid item>
-          <Link href={Routes.LOGIN} variant="body2">
+          <Link component={RouterLink} to={Routes.LOGIN} variant="body2">
             Already have an account? Sign in
           </Link>
         </Grid>
