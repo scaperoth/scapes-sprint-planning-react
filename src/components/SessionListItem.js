@@ -16,16 +16,22 @@ const useStyles = makeStyles(theme => ({
 
 const SessionListItem = ({ children }) => {
   const classes = useStyles();
+
   return (
     <Grid item xs>
-      <div className={classes.root}>{children}</div>
+      <div className={classes.root}>
+        {children}
+      </div>
     </Grid>
   );
 };
 
 SessionListItem.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.array, PropTypes.string])
-    .isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.array,
+    PropTypes.string,
+  ]).isRequired,
 };
 
 export default SessionListItem;

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const ErrorMessage = ({ error }) => {
   const [open, setOpen] = useState(true);
@@ -11,7 +11,7 @@ const ErrorMessage = ({ error }) => {
   }, [error]);
 
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
+    if (reason === 'clickaway') {
       return;
     }
     setOpen(false);
@@ -19,7 +19,7 @@ const ErrorMessage = ({ error }) => {
 
   return (
     <Snackbar
-      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       open={open}
       autoHideDuration={6000}
       onClose={handleClose}
@@ -35,9 +35,9 @@ ErrorMessage.propTypes = {
   error: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.shape({
-      message: PropTypes.string
-    })
-  ]).isRequired
+      message: PropTypes.string,
+    }),
+  ]).isRequired,
 };
 
 export default ErrorMessage;

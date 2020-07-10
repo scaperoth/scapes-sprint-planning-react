@@ -7,6 +7,7 @@ import Pages from '../pages';
 import ProtectedRoute from './ProtectedRoute';
 import * as Routes from '../constants/routes';
 import { logout } from '../state/actions/auth.actions';
+import PlanningSessionCreateForm from '../components/Forms/PlanningSessionCreateForm';
 
 const AppRouter = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const AppRouter = () => {
         dispatch(logout());
       }
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <AuthUserContext.Provider value={{ authUser, auth }}>
@@ -35,7 +36,11 @@ const AppRouter = () => {
             path={Routes.PASSWORD_FORGET}
             component={Pages.PasswordForget}
           />
-          <ProtectedRoute path={Routes.SESSIONS} component={Pages.Sessions} />
+          <ProtectedRoute exact path={Routes.SESSIONS} component={Pages.Sessions} />
+          <ProtectedRoute
+            path={Routes.CREATE_SESSION}
+            component={PlanningSessionCreateForm}
+          />
           <Route component={Pages.NotFound} />
         </Switch>
       </Router>
