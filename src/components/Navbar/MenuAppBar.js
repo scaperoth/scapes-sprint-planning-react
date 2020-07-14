@@ -30,7 +30,6 @@ const useStyles = makeStyles(theme => ({
 const MenuAppBar = () => {
   const anchorPosition = 'left';
   const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   const toggleDrawer = toggleOpen => event => {
@@ -67,7 +66,7 @@ const MenuAppBar = () => {
           <Typography variant="h6" className={classes.title}>
             Scapes Sprint Planning
           </Typography>
-          {auth && <AccountMenu />}
+          <AccountMenu />
         </Toolbar>
       </AppBar>
     </div>
