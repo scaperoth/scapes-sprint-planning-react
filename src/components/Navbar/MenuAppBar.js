@@ -5,9 +5,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import Drawer from '@material-ui/core/Drawer';
 import SubMenu from './SubMenu';
 import AccountMenu from './AccountMenu';
@@ -47,10 +44,6 @@ const MenuAppBar = () => {
     setMenuOpen(toggleOpen);
   };
 
-  const handleChange = event => {
-    setAuth(event.target.checked);
-  };
-
   return (
     <div className={classes.root}>
       <Drawer
@@ -60,18 +53,6 @@ const MenuAppBar = () => {
       >
         <SubMenu onClick={toggleDrawer} />
       </Drawer>
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? 'Logout' : 'Login'}
-        />
-      </FormGroup>
       <AppBar position="static" className={classes.menu}>
         <Toolbar>
           <IconButton
