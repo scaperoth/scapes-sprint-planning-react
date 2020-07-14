@@ -2,10 +2,10 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import Typography from '@material-ui/core/Typography';
 import PageLayout from '../components/Layout/PageLayout';
 import SessionCreateForm from '../components/Forms/PlanningSessionCreateForm';
 import * as Routes from '../constants/routes';
+import PageHeader from '../components/Layout/PageHeader';
 
 const SessionCreate = () => (
   <PageLayout>
@@ -20,12 +20,11 @@ const SessionCreate = () => (
         </Button>
       </Grid>
       <Grid item xs={9}>
-        <Typography component="h3" variant="h3">
-          Create Planning Session
-        </Typography>
-        <Typography component="h5" variant="h5">
-          Choose your session configuration
-        </Typography>
+        <PageHeader
+          title="Create Planning"
+          subtitle="Choose your session configuration"
+          description="If you're not sure about what to put here, that's ok! You can always make changes later."
+        />
       </Grid>
       <Grid item xs={9}>
         <SessionCreateForm />

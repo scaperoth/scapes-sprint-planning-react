@@ -1,30 +1,25 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import PageLayout from '../components/Layout/PageLayout';
 import SessionList from '../components/SessionList';
 import * as Routes from '../constants/routes';
+import PageHeader from '../components/Layout/PageHeader';
 
 const PlanningSessions = () => (
   <PageLayout>
-    <Grid container spacing={2} justify="center">
+    <Grid container spacing={4} justify="center">
       <Grid item xs={9}>
-        <Typography component="h4" variant="h3">
-          My Planning Sessions
-        </Typography>
-        <Typography variant="h5">
-          Get started here
-        </Typography>
-        <Typography variant="body1" gutterBottom>
-          Click on any session that you would like to start or continue.
-        </Typography>
+        <PageHeader
+          title="My Planning Sessions"
+          subtitle="Get started here"
+          description="Click on any session that you would like to start or continue. Or you can add a new planning session here"
+        />
       </Grid>
       <Grid item xs={9}>
         <Button
+          variant="contained"
           color="primary"
-          startIcon={<AddCircleIcon color="primary" />}
           href={Routes.CREATE_SESSION}
         >
           Add New Planning Session

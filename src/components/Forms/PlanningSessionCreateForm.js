@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2),
   },
   wrapper: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1, 0),
     position: 'relative',
   },
   buttonProgress: {
@@ -123,27 +123,22 @@ const PlanningSessionCreateForm = () => {
                 helperText={formErrors.name}
               />
             </Grid>
-
-            <div className={classes.wrapper}>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                disabled={loading}
-                className={classes.submit}
-                onClick={e => submit(e, authUser, false)}
-              >
-                Save
-              </Button>
-              {loading && (
-                <CircularProgress
-                  size={24}
-                  className={classes.buttonProgress}
-                />
-              )}
-            </div>
           </Grid>
+          <div className={classes.wrapper}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={loading}
+              className={classes.submit}
+              onClick={e => submit(e, authUser, false)}
+            >
+              Save
+            </Button>
+            {loading && (
+              <CircularProgress size={24} className={classes.buttonProgress} />
+            )}
+          </div>
         </form>
       )}
     </AuthUserContext.Consumer>
