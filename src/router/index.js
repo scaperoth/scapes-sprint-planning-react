@@ -4,7 +4,6 @@ import Pages from '../pages';
 import { withAuthProvider } from '../hoc';
 import ProtectedRoute from './ProtectedRoute';
 import * as Routes from '../constants/routes';
-import PlanningSessionCreateForm from '../components/Forms/PlanningSessionCreateForm';
 
 const AppRouter = () => (
   <Router>
@@ -14,10 +13,10 @@ const AppRouter = () => (
       <Route path={Routes.LOGOUT} component={Pages.Logout} />
       <Route path={Routes.SIGNUP} component={Pages.Register} />
       <Route path={Routes.PASSWORD_FORGET} component={Pages.PasswordForget} />
-      <ProtectedRoute exact path={Routes.SESSIONS} component={Pages.Sessions} />
+      <ProtectedRoute exact path={Routes.SESSIONS} component={Pages.PlanningSessions} />
       <ProtectedRoute
         path={Routes.CREATE_SESSION}
-        component={PlanningSessionCreateForm}
+        component={Pages.PlanningSessionCreate}
       />
       <Route component={Pages.NotFound} />
     </Switch>
