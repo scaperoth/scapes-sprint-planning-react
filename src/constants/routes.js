@@ -6,5 +6,5 @@ export const PASSWORD_FORGET = '/pw-forget';
 export const SESSIONS = '/sessions';
 export const CREATE_SESSION = '/sessions/new';
 
-export const LOGIN_REDIRECT = HOME;
+export const LOGIN_REDIRECT = SESSIONS;
 export const REGISTER_REDIRECT = HOME;

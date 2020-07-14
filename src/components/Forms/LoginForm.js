@@ -60,7 +60,6 @@ const LoginForm = () => {
       await dispatch(login(formFields));
       history.push(Routes.LOGIN_REDIRECT);
     } catch (err) {
-      console.log('err', err)
       setFormErrors(err.fields);
       setLoading(false);
     }
