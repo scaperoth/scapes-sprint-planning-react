@@ -10,7 +10,6 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: [
-      'OpenSans',
       '-apple-system',
       'BlinkMacSystemFont',
       '"Segoe UI"',
@@ -22,9 +21,6 @@ const theme = createMuiTheme({
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
     ].join(','),
-    h2: {
-      fontWeight: 100,
-    },
   },
   status: {
     danger: 'orange',

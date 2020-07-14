@@ -6,8 +6,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import ListAltIcon from '@material-ui/icons/ListAlt';
 
 const useStyles = makeStyles(() => ({
   list: {
@@ -18,8 +17,7 @@ const useStyles = makeStyles(() => ({
 const SubMenu = ({ onClick }) => {
   const classes = useStyles();
   const menuItems = [
-    { name: 'Home', link: '/' },
-    { name: 'Sessions', link: '/sessions' },
+    { name: 'Sessions', link: '/sessions', Icon: ListAltIcon },
   ];
 
   return (
@@ -30,10 +28,10 @@ const SubMenu = ({ onClick }) => {
       onKeyDown={onClick()}
     >
       <List>
-        {menuItems.map((item, index) => (
+        {menuItems.map(item => (
           <ListItem button component={Link} to={item.link} key={item.name}>
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <item.Icon />
             </ListItemIcon>
             <ListItemText primary={item.name} />
           </ListItem>
