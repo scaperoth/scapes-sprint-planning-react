@@ -9,8 +9,13 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    animation: `${theme.animations.fadeIn.name} ${theme.timing[5]} ${theme.transitions.easing.easeInOut} forwards`,
+    opacity: 0,
+  },
+  ...theme.animations.fadeIn.keyframes,
   title: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   pos: {
     fontSize: 10,
