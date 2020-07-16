@@ -32,12 +32,9 @@ const SessionList = () => {
           authUser && (
             <Grid container spacing={3}>
               {planningSessions.data.map(planningSession => (
-                <SessionListItem
-                  key={planningSession.key}
-                  userId={authUser.uid}
-                >
-                  {planningSession.name}
-                </SessionListItem>
+                <Grid item xs={6} key={planningSession.key}>
+                  <SessionListItem planningSession={planningSession} />
+                </Grid>
               ))}
             </Grid>
           )
