@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import * as Routes from '../../constants/routes';
 import { createPlanningSession } from '../../state/actions/planning-session.actions';
-import { AuthUserContext } from '../Context';
+import AuthUserContext from '../Context/AuthUserContext';
 import TextField from './TextField';
 
 const useStyles = makeStyles(theme => ({

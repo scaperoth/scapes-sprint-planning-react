@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AuthService } from '../state/services';
-import { AuthUserContext } from '../components/Context';
+import AuthUserContext from '../components/Context/AuthUserContext';
 import { logout } from '../state/actions/auth.actions';
 
 const withAuthProvider = Component => props => {

@@ -3,7 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import FormContainer from '../components/Layout/Container';
+import FormContainer from '../components/Layout/SingleFormContainer';
 import LoginForm from '../components/Forms/LoginForm';
 
 const useStyles = makeStyles(theme => ({
