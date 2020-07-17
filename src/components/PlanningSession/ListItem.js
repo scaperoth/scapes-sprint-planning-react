@@ -16,6 +16,7 @@ import * as Routes from '../../constants/routes';
 import { AuthUserContext } from '../../common/providers/AuthUserProvider';
 import { removePlanningSession } from '../../state/actions/planning-session.actions';
 import ConfirmDialog from '../alerts/ConfirmDialog';
+import useAlert from '../../common/hooks/useAlert';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,6 +41,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SessionListItem = ({ planningSession }) => {
+  const { addAlert } = useAlert();
   const history = useHistory();
   const dispatch = useDispatch();
   const [confirmOpen, setConfirmOpen] = useState();
@@ -85,6 +87,7 @@ const SessionListItem = ({ planningSession }) => {
 
   const removeSession = authUser => {
     setConfirmOpen(false);
+    addAlert('Successfully removed planning session', 'success');
     dispatch(removePlanningSession(authUser.uid, planningSession));
   };
 
