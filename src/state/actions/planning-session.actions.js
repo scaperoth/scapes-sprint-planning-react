@@ -1,16 +1,27 @@
 import { PlanningSessionService } from '../services';
 
-export const GET_TYPE = 'GET_PLANNING_SESSIONS';
 export const CREATE_TYPE = 'CREATE_PLANNING_SESSION';
+export const READ_TYPE = 'GET_PLANNING_SESSION';
+export const READ_ALL_TYPE = 'GET_PLANNING_SESSIONS';
 export const UPDATE_TYPE = 'UPDATE_PLANNING_SESSION';
 export const DELETE_TYPE = 'DELETE_PLANNING_SESSION';
 
-export const getPlanningSessions = (userId) => ({
-  payload: PlanningSessionService.get(userId),
-  type: GET_TYPE,
+export const getPlanningSessionById = (userId, planningSessionId) => ({
+  payload: PlanningSessionService.getOne(userId, planningSessionId),
+  type: READ_TYPE,
+});
+
+export const getPlanningSessions = userId => ({
+  payload: PlanningSessionService.getAll(userId),
+  type: READ_ALL_TYPE,
 });
 
 export const createPlanningSession = (userId, options) => ({
   payload: PlanningSessionService.create(userId, options),
   type: CREATE_TYPE,
+});
+
+export const updatePlanningSession = (userId, options) => ({
+  payload: PlanningSessionService.update(userId, options),
+  type: UPDATE_TYPE,
 });

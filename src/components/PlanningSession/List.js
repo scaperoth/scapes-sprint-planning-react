@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import SessionListItem from './SessionListItem';
+import SessionListItem from './ListItem';
 import AuthUserContext from '../Context/AuthUserContext';
 import { getPlanningSessions } from '../../state/actions/planning-session.actions';
 
@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
 
 const SessionList = () => {
   const dispatch = useDispatch();
-  const planningSessions = useSelector(state => state.planningSessionList);
+  const planningSessions = useSelector(state => state.planningSessionList.data);
   const authContext = useContext(AuthUserContext);
   const classes = useStyles();
 
@@ -31,7 +31,7 @@ const SessionList = () => {
         {({ authUser }) =>
           authUser && (
             <Grid container spacing={3}>
-              {planningSessions.data.map(planningSession => (
+              {planningSessions.map(planningSession => (
                 <Grid item md={6} xs={12} key={planningSession.key}>
                   <SessionListItem planningSession={planningSession} />
                 </Grid>

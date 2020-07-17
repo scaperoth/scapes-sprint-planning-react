@@ -1,8 +1,8 @@
-import { GET_TYPE } from '../actions/planning-session.actions';
+import { READ_ALL_TYPE } from '../actions/planning-session.actions';
 import { buildActionRequests } from '../helpers';
 import ServerError from '../errors/server.error';
 
-const getActions = buildActionRequests(GET_TYPE);
+const getActions = buildActionRequests(READ_ALL_TYPE);
 
 const initialState = {
   loading: false,

@@ -18,6 +18,10 @@ const AppRouter = () => (
         path={Routes.CREATE_SESSION}
         component={Pages.PlanningSessionCreate}
       />
+      <ProtectedRoute
+        path={Routes.UPDATE_SESSION}
+        component={Pages.PlanningSessionUpdate}
+      />
       <Route component={Pages.NotFound} />
     </Switch>
   </Router>
