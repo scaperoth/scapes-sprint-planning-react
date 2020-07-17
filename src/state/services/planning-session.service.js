@@ -76,3 +76,12 @@ export const update = (userId, options) => {
     });
   });
 };
+
+export const remove = async (userId, options) => {
+  const path = `users/${userId}/planningSessions/${options.key}`;
+  const ref = firebase.database.ref(path);
+  await ref.remove();
+  return Promise.resolve({
+    ...options,
+  });
+};

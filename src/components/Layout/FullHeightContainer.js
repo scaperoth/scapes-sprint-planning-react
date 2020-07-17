@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import Footer from '../Content/Footer';
+import Footer from '../content/Footer';
 
 const useStyles = makeStyles(() => ({
   root: {

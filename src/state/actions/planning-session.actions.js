@@ -25,3 +25,8 @@ export const updatePlanningSession = (userId, options) => ({
   payload: PlanningSessionService.update(userId, options),
   type: UPDATE_TYPE,
 });
+
+export const removePlanningSession = (userId, options) => ({
+  payload: PlanningSessionService.remove(userId, options),
+  type: DELETE_TYPE,
+});

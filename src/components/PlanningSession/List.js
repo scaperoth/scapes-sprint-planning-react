@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SessionListItem from './ListItem';
-import AuthUserContext from '../Context/AuthUserContext';
+import { AuthUserContext } from '../../common/providers/AuthUserProvider';
 import { getPlanningSessions } from '../../state/actions/planning-session.actions';
 
 const useStyles = makeStyles(() => ({

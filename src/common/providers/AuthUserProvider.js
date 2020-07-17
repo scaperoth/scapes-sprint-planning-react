@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { AuthService } from '../state/services';
-import AuthUserContext from '../components/Context/AuthUserContext';
-import { logout } from '../state/actions/auth.actions';
+import { AuthService } from '../../state/services';
+import { logout } from '../../state/actions/auth.actions';
 
-const withAuthProvider = Component => props => {
+export const AuthUserContext = React.createContext(null);
+
+const AuthUserProvider = ({ children }) => {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
   const [authUser, setAuthUser] = useState();
@@ -21,9 +23,21 @@ const withAuthProvider = Component => props => {
 
   return (
     <AuthUserContext.Provider value={{ authUser, auth }}>
-      <Component {...props} />
+      {children}
     </AuthUserContext.Provider>
   );
 };
 
-export default withAuthProvider;
+AuthUserProvider.defaultProps = {
+  children: null,
+};
+
+AuthUserProvider.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.array,
+    PropTypes.string,
+  ]),
+};
+
+export default AuthUserProvider;

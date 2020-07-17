@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import * as Routes from '../../constants/routes';
-import AuthUserContext from '../Context/AuthUserContext';
+import { AuthUserContext } from '../../common/providers/AuthUserProvider';
 
 const useStyles = makeStyles(theme => ({
   heroContent: {

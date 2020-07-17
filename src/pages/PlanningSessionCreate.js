@@ -2,10 +2,10 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import PageLayout from '../components/Layout/MenuContainer';
-import SessionCreateForm from '../components/PlanningSession/CreateForm';
+import PageLayout from '../components/layout/MenuContainer';
+import SessionCreateForm from '../components/planningSession/CreateForm';
 import * as Routes from '../constants/routes';
-import PageHeader from '../components/Content/PageHeader';
+import PageHeader from '../components/content/PageHeader';
 
 const SessionCreate = () => (
   <PageLayout>

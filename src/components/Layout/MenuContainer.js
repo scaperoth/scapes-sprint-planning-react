@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Container from '@material-ui/core/Container';
-import Navbar from '../Navigation/MenuAppBar';
+import Navbar from '../navigation/MenuAppBar';
 
 const PageLayout = ({ children }) => (
   <div>

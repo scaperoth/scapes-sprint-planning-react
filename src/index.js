@@ -7,7 +7,10 @@ import AppRouter from './router';
 import store from './state/store';
 import * as serviceWorker from './serviceWorker';
 import theme from './theme';
+import AuthUserProvider from './common/providers/AuthUserProvider';
+import AlertProvider from './common/providers/AlertProvider';
 import './index.css';
+import Snackbar from './components/alerts/Snackbar';
 
 const rootElement = document.getElementById('root');
 
@@ -15,7 +18,12 @@ render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppRouter />
+      <AuthUserProvider>
+        <AlertProvider>
+          <AppRouter />
+          <Snackbar />
+        </AlertProvider>
+      </AuthUserProvider>
     </ThemeProvider>
   </Provider>,
   rootElement,

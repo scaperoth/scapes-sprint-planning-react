@@ -8,8 +8,10 @@ import {
   updatePlanningSession,
   getPlanningSessionById,
 } from '../../state/actions/planning-session.actions';
+import useAlert from '../../common/hooks/useAlert';
 
 const PlanningSessionUpdateForm = ({ authUser }) => {
+  const { addAlert } = useAlert();
   const history = useHistory();
   const dispatch = useDispatch();
   const planningSession = useSelector(state => state.planningSession.data);
@@ -31,6 +33,7 @@ const PlanningSessionUpdateForm = ({ authUser }) => {
         ...formFields,
       }),
     );
+    addAlert('Successfully updated planning session', 'success');
     history.push(Routes.SESSIONS);
   };
 

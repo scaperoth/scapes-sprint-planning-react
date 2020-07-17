@@ -1,10 +1,10 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import PageLayout from '../components/Layout/MenuContainer';
-import SessionList from '../components/PlanningSession/List';
+import PageLayout from '../components/layout/MenuContainer';
+import SessionList from '../components/planningSession/List';
 import * as Routes from '../constants/routes';
-import PageHeader from '../components/Content/PageHeader';
+import PageHeader from '../components/content/PageHeader';
 
 const PlanningSessions = () => (
   <PageLayout>

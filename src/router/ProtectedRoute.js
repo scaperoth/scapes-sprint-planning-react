@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import * as Routes from '../constants/routes';
-import AuthUserContext from '../components/Context/AuthUserContext';
+import { AuthUserContext } from '../common/providers/AuthUserProvider';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   return (
