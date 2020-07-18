@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -15,34 +15,36 @@ const useStyles = makeStyles(() => ({
 
 const SessionList = () => {
   const dispatch = useDispatch();
-  const planningSessions = useSelector(state => state.planningSessionList.data);
+  const planningSessions = useSelector(state => state.planningSessionList);
   const authContext = useContext(AuthUserContext);
   const classes = useStyles();
+  const [loading, setLoading] = useState();
 
   useEffect(() => {
+    setLoading(true);
     const { authUser } = authContext;
     if (authUser && authUser.uid) {
       dispatch(getPlanningSessions(authUser.uid));
     }
   }, [authContext, dispatch]);
 
+  useEffect(() => {
+    setLoading(planningSessions.loading);
+  }, [planningSessions.loading]);
+
   return (
     <div className={classes.root}>
-      <AuthUserContext.Consumer>
-        {({ authUser }) =>
-          authUser ? (
-            <Grid container spacing={3}>
-              {planningSessions.map(planningSession => (
-                <Grid item md={6} xs={12} key={planningSession.key}>
-                  <SessionListItem planningSession={planningSession} />
-                </Grid>
-              ))}
+      {loading ? (
+        <SessionLoadingList />
+      ) : (
+        <Grid container spacing={3}>
+          {planningSessions.data.map(planningSession => (
+            <Grid item md={6} xs={12} key={planningSession.id}>
+              <SessionListItem planningSession={planningSession} />
             </Grid>
-          ) : (
-            <SessionLoadingList />
-          )
-        }
-      </AuthUserContext.Consumer>
+          ))}
+        </Grid>
+      )}
     </div>
   );
 };

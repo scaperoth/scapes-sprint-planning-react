@@ -33,7 +33,7 @@ const planningSessionListReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        data: state.data.filter(row => row.key !== action.payload.key),
+        data: state.data.filter(row => row.id !== action.payload.id),
       };
     case getActions.rejected.type:
     case deleteActions.rejected.type:

@@ -4,7 +4,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import FormContainer from '../components/layout/SingleFormContainer';
-import LoginForm from '../components/Forms/LoginForm';
+import LoginForm from '../components/user/LoginForm';
 
 const useStyles = makeStyles(theme => ({
   paper: {

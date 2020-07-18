@@ -51,7 +51,8 @@ const SessionListItem = ({ planningSession }) => {
   const [confirmOpen, setConfirmOpen] = useState();
   const classes = useStyles();
 
-  const getDate = () => new Date(planningSession.createdAt).toDateString();
+  const getDate = () =>
+    new Date(planningSession.createdAt.nanoseconds).toDateString();
 
   const getStories = () => {
     const { stories } = planningSession;
@@ -79,14 +80,14 @@ const SessionListItem = ({ planningSession }) => {
 
   const getStartUrl = () =>
     window.location.origin.toString() +
-    Routes.START_SESSION(planningSession.key);
+    Routes.START_SESSION(planningSession.id);
 
   const startSession = () => {
-    history.push(Routes.START_SESSION(planningSession.key));
+    history.push(Routes.START_SESSION(planningSession.id));
   };
 
   const routeToEditSession = () => {
-    history.push(Routes.UPDATE_SESSION(planningSession.key));
+    history.push(Routes.UPDATE_SESSION(planningSession.id));
   };
 
   const openRemoveConfirm = () => {
@@ -129,7 +130,7 @@ const SessionListItem = ({ planningSession }) => {
               gutterBottom
             >
               URL:&nbsp;
-              <Link href={Routes.START_SESSION(planningSession.key)}>
+              <Link href={Routes.START_SESSION(planningSession.id)}>
                 {getStartUrl()}
               </Link>
             </Typography>
@@ -188,10 +189,10 @@ const SessionListItem = ({ planningSession }) => {
 
 SessionListItem.propTypes = {
   planningSession: PropTypes.shape({
-    key: PropTypes.string,
+    id: PropTypes.string,
     name: PropTypes.string,
     deckType: PropTypes.string,
-    createdAt: PropTypes.number,
+    createdAt: PropTypes.object,
     stories: PropTypes.arrayOf(
       PropTypes.shape({
         title: PropTypes.string,

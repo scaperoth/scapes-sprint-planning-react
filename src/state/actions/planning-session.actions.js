@@ -6,8 +6,8 @@ export const READ_ALL_TYPE = 'GET_PLANNING_SESSIONS';
 export const UPDATE_TYPE = 'UPDATE_PLANNING_SESSION';
 export const DELETE_TYPE = 'DELETE_PLANNING_SESSION';
 
-export const getPlanningSessionById = (userId, planningSessionId) => ({
-  payload: PlanningSessionService.getOne(userId, planningSessionId),
+export const getPlanningSessionById = planningSessionId => ({
+  payload: PlanningSessionService.getOne(planningSessionId),
   type: READ_TYPE,
 });
 
@@ -21,8 +21,8 @@ export const createPlanningSession = (userId, options) => ({
   type: CREATE_TYPE,
 });
 
-export const updatePlanningSession = (userId, options) => ({
-  payload: PlanningSessionService.update(userId, options),
+export const updatePlanningSession = options => ({
+  payload: PlanningSessionService.update(options),
   type: UPDATE_TYPE,
 });
 

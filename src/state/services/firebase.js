@@ -1,7 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/analytics';
-import 'firebase/database';
+import 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -20,11 +20,11 @@ class Firebase {
     this.app = app;
     this.auth = app.auth();
     this.analytics = app.analytics();
-    this.database = app.database();
+    this.db = app.firestore();
   }
 
   doGetTimestamp() {
-    return this.app.database.ServerValue.TIMESTAMP;
+    return this.app.firestore.FieldValue.serverTimestamp();
   }
 
   doCreateUserWithEmailAndPassword(email, password) {
