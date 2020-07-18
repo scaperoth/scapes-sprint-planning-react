@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import SessionListItem from './ListItem';
 import { AuthUserContext } from '../../common/providers/AuthUserProvider';
 import { getPlanningSessions } from '../../state/actions/planning-session.actions';
+import SessionLoadingList from './LoadingList';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -29,7 +30,7 @@ const SessionList = () => {
     <div className={classes.root}>
       <AuthUserContext.Consumer>
         {({ authUser }) =>
-          authUser && (
+          authUser ? (
             <Grid container spacing={3}>
               {planningSessions.map(planningSession => (
                 <Grid item md={6} xs={12} key={planningSession.key}>
@@ -37,6 +38,8 @@ const SessionList = () => {
                 </Grid>
               ))}
             </Grid>
+          ) : (
+            <SessionLoadingList />
           )
         }
       </AuthUserContext.Consumer>

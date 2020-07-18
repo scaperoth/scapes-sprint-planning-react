@@ -7,6 +7,7 @@ import PasswordForget from './PasswordForget';
 import PlanningSessions from './PlanningSessions';
 import PlanningSessionCreate from './PlanningSessionCreate';
 import PlanningSessionUpdate from './PlanningSessionUpdate';
+import PlanningSessionStart from './PlanningSessionStart';
 
 export default {
   Home,
@@ -18,4 +19,5 @@ export default {
   PlanningSessions,
   PlanningSessionCreate,
   PlanningSessionUpdate,
+  PlanningSessionStart,
 };

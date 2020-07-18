@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Settings';
+import Link from '@material-ui/core/Link';
 import * as Routes from '../../constants/routes';
 import { AuthUserContext } from '../../common/providers/AuthUserProvider';
 import { removePlanningSession } from '../../state/actions/planning-session.actions';
@@ -20,7 +21,7 @@ import useAlert from '../../common/hooks/useAlert';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    animation: `${theme.animations.fadeIn.name} ${theme.timing[5]} ${theme.transitions.easing.easeInOut} forwards`,
+    animation: `${theme.animations.fadeIn.name} ${theme.timing[3]} ${theme.transitions.easing.easeInOut} forwards`,
     opacity: 0,
   },
   ...theme.animations.fadeIn.keyframes,
@@ -29,6 +30,9 @@ const useStyles = makeStyles(theme => ({
   },
   date: {
     fontSize: 10,
+  },
+  url: {
+    fontSize: 12,
   },
   metaWrapper: {},
   meta: {
@@ -73,6 +77,14 @@ const SessionListItem = ({ planningSession }) => {
     return deckType;
   };
 
+  const getStartUrl = () =>
+    window.location.origin.toString() +
+    Routes.START_SESSION(planningSession.key);
+
+  const startSession = () => {
+    history.push(Routes.START_SESSION(planningSession.key));
+  };
+
   const routeToEditSession = () => {
     history.push(Routes.UPDATE_SESSION(planningSession.key));
   };
@@ -96,7 +108,12 @@ const SessionListItem = ({ planningSession }) => {
       <Grid item xs={12}>
         <Card className={classes.root}>
           <CardContent>
-            <Typography className={classes.title} color="textPrimary">
+            <Typography
+              className={classes.title}
+              color="textPrimary"
+              comopnent={'h4'}
+              variant={'h6'}
+            >
               {planningSession.name}
             </Typography>
             <Typography
@@ -105,6 +122,16 @@ const SessionListItem = ({ planningSession }) => {
               gutterBottom
             >
               {getDate()}
+            </Typography>
+            <Typography
+              className={classes.url}
+              color="textSecondary"
+              gutterBottom
+            >
+              URL:&nbsp;
+              <Link href={Routes.START_SESSION(planningSession.key)}>
+                {getStartUrl()}
+              </Link>
             </Typography>
             <div className={classes.metaWrapper}>
               <Typography className={classes.meta}>
@@ -119,7 +146,7 @@ const SessionListItem = ({ planningSession }) => {
             </div>
           </CardContent>
           <CardActions className={classes.actions} disableSpacing>
-            <Button size="small" color="primary">
+            <Button size="small" color="primary" onClick={startSession}>
               Start Session
             </Button>
             <div className={classes.actionsControls}>

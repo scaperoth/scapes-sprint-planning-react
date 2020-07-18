@@ -22,8 +22,13 @@ const AppRouter = () => (
         component={Pages.PlanningSessionCreate}
       />
       <ProtectedRoute
+        exact
         path={Routes.UPDATE_SESSION()}
         component={Pages.PlanningSessionUpdate}
+      />
+      <ProtectedRoute
+        path={Routes.START_SESSION()}
+        component={Pages.PlanningSessionStart}
       />
       <Route component={Pages.NotFound} />
     </Switch>
