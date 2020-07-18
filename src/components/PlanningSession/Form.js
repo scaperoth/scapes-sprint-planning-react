@@ -46,7 +46,7 @@ const PlanningSessionForm = ({ defaultValues, loading, handleSubmit }) => {
   }, [loading]);
 
   const validateName = ({ name }) => {
-    if (!name) {
+    if (!name.trim()) {
       return 'A name is required.';
     }
     return false;
