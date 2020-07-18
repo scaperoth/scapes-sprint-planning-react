@@ -4,6 +4,20 @@ import Login from './Login';
 import Logout from './Logout';
 import Register from './Register';
 import PasswordForget from './PasswordForget';
-import Sessions from './Sessions';
+import PlanningSessions from './PlanningSessions';
+import PlanningSessionCreate from './PlanningSessionCreate';
+import PlanningSessionUpdate from './PlanningSessionUpdate';
+import PlanningSessionStart from './PlanningSessionStart';
 
-export default { Home, NotFound, Login, Logout, Register, PasswordForget, Sessions };
+export default {
+  Home,
+  NotFound,
+  Login,
+  Logout,
+  Register,
+  PasswordForget,
+  PlanningSessions,
+  PlanningSessionCreate,
+  PlanningSessionUpdate,
+  PlanningSessionStart,
+};
