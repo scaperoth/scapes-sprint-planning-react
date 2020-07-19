@@ -13,10 +13,10 @@ const useStyles = makeStyles(theme => ({
     height: '220px',
   },
   animation: {
-    animation: `${theme.animations.placeholderShimmer.name} 1.5s linear forwards infinite`,
+    animation: `${theme.animations.placeholderShimmer.name} 1.8s linear infinite`,
     background:
       'linear-gradient(to right, #f7f7f7 8%, #f1f1f1 38%, #f7f7f7 54%)',
-    backgroundSize: '1000px 640px',
+    backgroundSize: '1000px 100%',
     position: 'relative',
   },
   title: {
@@ -45,8 +45,8 @@ const SessionLoadingList = () => {
 
   return (
     <Grid container spacing={3} className={classes.root}>
-      {[...Array(4)].map(() => (
-        <Grid item xs={6}>
+      {[...Array(4)].map((e, i) => (
+        <Grid item xs={12} md={6} key={i}>
           <Card className={classes.card}>
             <CardContent>
               <div className={clsx(classes.animation, classes.title)} />

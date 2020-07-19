@@ -1,39 +1,21 @@
 import firebase from './firebase';
-import { snapshotChildMap } from '../helpers';
 
 export const create = (userId, options) => {
-  const path = `users/${userId}/planningSessions`;
-  const newOptions = {
+  return firebase.db.collection('planningSessions').add({
     ...options,
+    owner: userId,
     createdAt: firebase.doGetTimestamp(),
     updatedAt: firebase.doGetTimestamp(),
-  };
-  const newRef = firebase.database
-    .ref()
-    .child(path)
-    .push();
-  return new Promise((resolve, reject) => {
-    newRef.set(newOptions, error => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve({
-          key: newRef.key,
-          ...newOptions,
-        });
-      }
-    });
   });
 };
 
-export const getOne = (userId, sessionId) => {
-  const path = `users/${userId}/planningSessions/${sessionId}`;
-  const ref = firebase.database.ref(path);
+export const getOne = sessionId => {
+  const query = firebase.db.collection('planningSessions').doc(sessionId);
   return new Promise((resolve, reject) => {
-    ref
-      .once('value')
-      .then(snapshot => {
-        resolve({ key: snapshot.key, ...snapshot.toJSON() } || {});
+    query
+      .get()
+      .then(doc => {
+        resolve({ id: doc.id, ...doc.data() } || {});
       })
       .catch(err => {
         reject(err);
@@ -42,13 +24,19 @@ export const getOne = (userId, sessionId) => {
 };
 
 export const getAll = userId => {
-  const path = `users/${userId}/planningSessions`;
-  const ref = firebase.database.ref(path).orderByChild('createdAt');
+  const query = firebase.db
+    .collection('planningSessions')
+    .where('owner', '==', userId)
+    .orderBy('createdAt', 'desc');
   return new Promise((resolve, reject) => {
-    ref
-      .once('value')
+    query
+      .get()
       .then(snapshot => {
-        resolve(snapshotChildMap(snapshot).reverse());
+        const results = [];
+        snapshot.forEach(doc => {
+          results.push({ id: doc.id, ...doc.data() });
+        });
+        resolve(results);
       })
       .catch(err => {
         reject(err);
@@ -56,32 +44,26 @@ export const getAll = userId => {
   });
 };
 
-export const update = (userId, options) => {
-  const path = `users/${userId}/planningSessions/${options.key}`;
+export const update = async (options) => {
+  const query = firebase.db.collection('planningSessions').doc(options.id);
   const newOptions = {
     ...options,
     updatedAt: firebase.doGetTimestamp(),
   };
-  const ref = firebase.database.ref(path);
-  return new Promise((resolve, reject) => {
-    ref.set(newOptions, error => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve({
-          key: ref.key,
-          ...newOptions,
-        });
-      }
-    });
-  });
+  await query.update(newOptions);
+  return Promise.resolve(newOptions);
 };
 
-export const remove = async (userId, options) => {
-  const path = `users/${userId}/planningSessions/${options.key}`;
-  const ref = firebase.database.ref(path);
-  await ref.remove();
-  return Promise.resolve({
-    ...options,
-  });
+export const remove = (userId, options) => {
+  const query = firebase.db.collection('planningSessions').doc(options.id);
+  return new Promise((resolve, reject) =>
+    query
+      .delete()
+      .then(() => {
+        resolve(options);
+      })
+      .catch(err => {
+        reject(err);
+      }),
+  );
 };

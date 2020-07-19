@@ -23,12 +23,12 @@ const PlanningSessionUpdateForm = ({ authUser }) => {
     }
     const paths = history.location.pathname.split('/');
     const sessionId = paths[paths.length - 1];
-    dispatch(getPlanningSessionById(authUser.uid, sessionId));
+    dispatch(getPlanningSessionById(sessionId));
   }, [history.location.pathname, authUser, dispatch]);
 
   const handleSubmit = async formFields => {
     await dispatch(
-      updatePlanningSession(authUser.uid, {
+      updatePlanningSession({
         ...planningSession,
         ...formFields,
       }),
@@ -38,7 +38,7 @@ const PlanningSessionUpdateForm = ({ authUser }) => {
   };
 
   return (
-    !!planningSession.key && (
+    !!planningSession.id && (
       <PlanningSessionForm
         loading={loading}
         defaultValues={planningSession}
