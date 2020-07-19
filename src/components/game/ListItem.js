@@ -51,8 +51,11 @@ const GameListItem = ({ game }) => {
   const [confirmOpen, setConfirmOpen] = useState();
   const classes = useStyles();
 
-  const getDate = () =>
-    new Date(game.createdAt.nanoseconds).toDateString();
+  const getDate = () => {
+    const secs = game.createdAt.seconds;
+    const t = new Date(secs * 1000);
+    return t.toDateString();
+  };
 
   const getStories = () => {
     const { stories } = game;
@@ -79,8 +82,7 @@ const GameListItem = ({ game }) => {
   };
 
   const getStartUrl = () =>
-    window.location.origin.toString() +
-    Routes.START_GAME(game.id);
+    window.location.origin.toString() + Routes.START_GAME(game.id);
 
   const startGame = () => {
     history.push(Routes.START_GAME(game.id));
@@ -130,9 +132,7 @@ const GameListItem = ({ game }) => {
               gutterBottom
             >
               URL:&nbsp;
-              <Link href={Routes.START_GAME(game.id)}>
-                {getStartUrl()}
-              </Link>
+              <Link href={Routes.START_GAME(game.id)}>{getStartUrl()}</Link>
             </Typography>
             <div className={classes.metaWrapper}>
               <Typography className={classes.meta}>
