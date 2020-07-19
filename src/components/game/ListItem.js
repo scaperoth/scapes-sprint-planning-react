@@ -18,6 +18,7 @@ import { AuthUserContext } from '../../common/providers/AuthUserProvider';
 import { removeGame as removeGameAction } from '../../state/actions/game.actions';
 import ConfirmDialog from '../alerts/ConfirmDialog';
 import useAlert from '../../common/hooks/useAlert';
+import { secondsToDateString } from '../../utils/date.utility';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -51,11 +52,7 @@ const GameListItem = ({ game }) => {
   const [confirmOpen, setConfirmOpen] = useState();
   const classes = useStyles();
 
-  const getDate = () => {
-    const secs = game.createdAt.seconds;
-    const t = new Date(secs * 1000);
-    return t.toDateString();
-  };
+  const getDate = () => secondsToDateString(game.createdAt.seconds);
 
   const getStories = () => {
     const { stories } = game;
