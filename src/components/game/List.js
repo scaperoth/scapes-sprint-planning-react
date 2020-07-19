@@ -31,7 +31,7 @@ const GameList = () => {
 
   return (
     <div className={classes.root}>
-      {loading ? (
+      {loading || games.loading ? (
         <GameLoadingList />
       ) : (
         <div>
