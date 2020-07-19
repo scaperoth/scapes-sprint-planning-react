@@ -37,7 +37,7 @@ const MenuAppBar = () => {
           <Toolbar>
             <Typography variant="h6" className={classes.title}>
               <Link color="inherit" href={Routes.HOME} className={classes.logo}>
-                Scapes Sprint Planning
+                Scapes Planning Poker
               </Link>
             </Typography>
             <AccountMenu />
