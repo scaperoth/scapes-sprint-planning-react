@@ -22,8 +22,8 @@ const GameUpdate = () => (
       </Grid>
       <Grid item xs={9}>
         <PageHeader
-          title="Update Planning Game"
-          subtitle="Update your session configuration"
+          title="Update Game"
+          subtitle="Update your game configuration"
         />
       </Grid>
       <Grid item xs={9}>

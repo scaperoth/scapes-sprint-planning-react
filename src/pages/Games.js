@@ -11,9 +11,9 @@ const Games = () => (
     <Grid container spacing={4} justify="center">
       <Grid item xs={9}>
         <PageHeader
-          title="My Planning Games"
+          title="My Games"
           subtitle="Get started here"
-          description="Click on any session that you would like to start or continue. Or you can add a new planning session here"
+          description="Click on any game that you would like to start or continue. Or you can add a new game here"
         />
       </Grid>
       <Grid item xs={9}>
@@ -22,7 +22,7 @@ const Games = () => (
           color="primary"
           href={Routes.CREATE_GAME}
         >
-          Add New Planning Game
+          Add New Game
         </Button>
       </Grid>
       <Grid item xs={9}>

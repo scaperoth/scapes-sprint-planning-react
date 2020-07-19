@@ -22,8 +22,8 @@ const GameUpdateForm = ({ authUser }) => {
       return;
     }
     const paths = history.location.pathname.split('/');
-    const sessionId = paths[paths.length - 1];
-    dispatch(getGameById(sessionId));
+    const gameId = paths[paths.length - 1];
+    dispatch(getGameById(gameId));
   }, [history.location.pathname, authUser, dispatch]);
 
   const handleSubmit = async formFields => {
@@ -33,7 +33,7 @@ const GameUpdateForm = ({ authUser }) => {
         ...formFields,
       }),
     );
-    addAlert('Successfully updated planning session', 'success');
+    addAlert('Successfully updated game', 'success');
     history.push(Routes.GAMES);
   };
 

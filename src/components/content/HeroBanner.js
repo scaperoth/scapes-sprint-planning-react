@@ -34,7 +34,7 @@ const HeroBanner = () => {
           gutterBottom
           className={classes.pageTitle}
         >
-          Scapes Sprint Planning
+          Scapes Planning Poker
         </Typography>
         <Typography variant="h5" align="center" color="textSecondary" paragraph>
           TODO: Put tagline here...

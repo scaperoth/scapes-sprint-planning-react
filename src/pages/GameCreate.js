@@ -21,8 +21,8 @@ const GameCreate = () => (
       </Grid>
       <Grid item xs={9}>
         <PageHeader
-          title="Create Planning"
-          subtitle="Choose your session configuration"
+          title="Create Game"
+          subtitle="Choose your game configuration"
           description="If you're not sure about what to put here, that's ok! You can always make changes later."
         />
       </Grid>

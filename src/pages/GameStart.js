@@ -3,7 +3,7 @@ import PageLayout from '../components/layout/MenuContainer';
 
 const GameStart = () => (
   <PageLayout>
-    Starting planning session
+    Starting game
   </PageLayout>
 );
 

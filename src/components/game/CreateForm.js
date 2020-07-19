@@ -14,7 +14,7 @@ const GameCreateForm = () => {
 
   const handleSubmit = async (formFields, authUser) => {
     await dispatch(createGame(authUser.uid, formFields));
-    addAlert('Successfully created planning session', 'success');
+    addAlert('Successfully created game', 'success');
     history.push(Routes.GAMES);
   };
 

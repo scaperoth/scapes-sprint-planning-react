@@ -10,8 +10,8 @@ export const create = (userId, options) =>
     updatedAt: firebase.doGetTimestamp(),
   });
 
-export const getOne = sessionId => {
-  const query = firebase.db.collection(collectionName).doc(sessionId);
+export const getOne = gameId => {
+  const query = firebase.db.collection(collectionName).doc(gameId);
   return new Promise((resolve, reject) => {
     query
       .get()

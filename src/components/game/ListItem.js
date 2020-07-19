@@ -100,7 +100,7 @@ const GameListItem = ({ game }) => {
 
   const removeGame = authUser => {
     setConfirmOpen(false);
-    addAlert('Successfully removed planning session', 'success');
+    addAlert('Successfully removed game', 'success');
     dispatch(removeGameAction(authUser.uid, game));
   };
 
@@ -173,9 +173,9 @@ const GameListItem = ({ game }) => {
         {({ authUser }) =>
           confirmOpen && (
             <ConfirmDialog
-              title={'Remove Planning Game'}
+              title={'Remove Game'}
               message={
-                'Are you sure you want to remove this planning session? This action cannot be undone.'
+                'Are you sure you want to remove this game? This action cannot be undone.'
               }
               onConfirm={() => removeGame(authUser)}
               onClose={onConfirmClose}
