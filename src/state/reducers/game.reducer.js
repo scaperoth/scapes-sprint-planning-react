@@ -2,7 +2,7 @@ import {
   CREATE_TYPE,
   READ_TYPE,
   UPDATE_TYPE,
-} from '../actions/planning-session.actions';
+} from '../actions/game.actions';
 import { buildActionRequests } from '../helpers';
 import ServerError from '../errors/server.error';
 
@@ -16,7 +16,7 @@ const initialState = {
   data: {},
 };
 
-const planningSessionReducer = (state = initialState, action) => {
+const gameReducer = (state = initialState, action) => {
   switch (action.type) {
     case createActions.pending.type:
     case readActions.pending.type:
@@ -47,4 +47,4 @@ const planningSessionReducer = (state = initialState, action) => {
   }
 };
 
-export default planningSessionReducer;
+export default gameReducer;

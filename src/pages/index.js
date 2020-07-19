@@ -4,10 +4,10 @@ import Login from './Login';
 import Logout from './Logout';
 import Register from './Register';
 import PasswordForget from './PasswordForget';
-import PlanningSessions from './PlanningSessions';
-import PlanningSessionCreate from './PlanningSessionCreate';
-import PlanningSessionUpdate from './PlanningSessionUpdate';
-import PlanningSessionStart from './PlanningSessionStart';
+import Games from './Games';
+import GameCreate from './GameCreate';
+import GameUpdate from './GameUpdate';
+import GameStart from './GameStart';
 
 export default {
   Home,
@@ -16,8 +16,8 @@ export default {
   Logout,
   Register,
   PasswordForget,
-  PlanningSessions,
-  PlanningSessionCreate,
-  PlanningSessionUpdate,
-  PlanningSessionStart,
+  Games,
+  GameCreate,
+  GameUpdate,
+  GameStart,
 };

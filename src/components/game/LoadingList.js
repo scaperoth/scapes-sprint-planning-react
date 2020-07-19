@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   ...theme.animations.placeholderShimmer.keyframes,
 }));
 
-const SessionLoadingList = () => {
+const GameLoadingList = () => {
   const classes = useStyles();
 
   return (
@@ -60,4 +60,4 @@ const SessionLoadingList = () => {
   );
 };
 
-export default SessionLoadingList;
+export default GameLoadingList;

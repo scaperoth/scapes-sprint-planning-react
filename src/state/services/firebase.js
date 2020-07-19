@@ -32,7 +32,7 @@ class Firebase {
   }
 
   async doSignInWithEmailAndPassword(email, password) {
-    await this.auth.setPersistence(app.auth.Auth.Persistence.SESSION);
+    await this.auth.setPersistence(app.auth.Auth.Persistence.GAME);
     return this.auth.signInWithEmailAndPassword(email, password);
   }
 
@@ -49,7 +49,7 @@ class Firebase {
   }
 
   async doGetCurrentUser() {
-    await this.auth.setPersistence(app.auth.Auth.Persistence.SESSION);
+    await this.auth.setPersistence(app.auth.Auth.Persistence.GAME);
     if (!this.auth.currentUser) {
       return null;
     }

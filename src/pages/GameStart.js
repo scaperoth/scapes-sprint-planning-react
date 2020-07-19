@@ -1,10 +1,10 @@
 import React from 'react';
 import PageLayout from '../components/layout/MenuContainer';
 
-const PlanningSessionStart = () => (
+const GameStart = () => (
   <PageLayout>
     Starting planning session
   </PageLayout>
 );
 
-export default PlanningSessionStart;
+export default GameStart;

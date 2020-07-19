@@ -14,21 +14,21 @@ const AppRouter = () => (
       <Route path={Routes.PASSWORD_FORGET} component={Pages.PasswordForget} />
       <ProtectedRoute
         exact
-        path={Routes.SESSIONS}
-        component={Pages.PlanningSessions}
+        path={Routes.GAMES}
+        component={Pages.Games}
       />
       <ProtectedRoute
-        path={Routes.CREATE_SESSION}
-        component={Pages.PlanningSessionCreate}
+        path={Routes.CREATE_GAME}
+        component={Pages.GameCreate}
       />
       <ProtectedRoute
         exact
-        path={Routes.UPDATE_SESSION()}
-        component={Pages.PlanningSessionUpdate}
+        path={Routes.UPDATE_GAME()}
+        component={Pages.GameUpdate}
       />
       <ProtectedRoute
-        path={Routes.START_SESSION()}
-        component={Pages.PlanningSessionStart}
+        path={Routes.START_GAME()}
+        component={Pages.GameStart}
       />
       <Route component={Pages.NotFound} />
     </Switch>

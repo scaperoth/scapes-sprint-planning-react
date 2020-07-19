@@ -2,10 +2,10 @@ import React, { useEffect, useContext, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import SessionListItem from './ListItem';
+import GameListItem from './ListItem';
 import { AuthUserContext } from '../../common/providers/AuthUserProvider';
-import { getPlanningSessions } from '../../state/actions/planning-session.actions';
-import SessionLoadingList from './LoadingList';
+import { getGames } from '../../state/actions/game.actions';
+import GameLoadingList from './LoadingList';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -13,9 +13,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const SessionList = () => {
+const GameList = () => {
   const dispatch = useDispatch();
-  const planningSessions = useSelector(state => state.planningSessionList);
+  const games = useSelector(state => state.gameList.data);
   const authContext = useContext(AuthUserContext);
   const classes = useStyles();
   const [loading, setLoading] = useState();
@@ -24,23 +24,23 @@ const SessionList = () => {
     setLoading(true);
     const { authUser } = authContext;
     if (authUser && authUser.uid) {
-      dispatch(getPlanningSessions(authUser.uid));
+      dispatch(getGames(authUser.uid));
     }
   }, [authContext, dispatch]);
 
   useEffect(() => {
-    setLoading(planningSessions.loading);
-  }, [planningSessions.loading]);
+    setLoading(games.loading);
+  }, [games.loading]);
 
   return (
     <div className={classes.root}>
       {loading ? (
-        <SessionLoadingList />
+        <GameLoadingList />
       ) : (
         <Grid container spacing={3}>
-          {planningSessions.data.map(planningSession => (
-            <Grid item md={6} xs={12} key={planningSession.id}>
-              <SessionListItem planningSession={planningSession} />
+          {games.data.map(game => (
+            <Grid item md={6} xs={12} key={game.id}>
+              <GameListItem game={game} />
             </Grid>
           ))}
         </Grid>
@@ -49,4 +49,4 @@ const SessionList = () => {
   );
 };
 
-export default SessionList;
+export default GameList;

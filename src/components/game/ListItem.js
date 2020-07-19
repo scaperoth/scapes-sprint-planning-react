@@ -15,7 +15,7 @@ import EditIcon from '@material-ui/icons/Settings';
 import Link from '@material-ui/core/Link';
 import * as Routes from '../../constants/routes';
 import { AuthUserContext } from '../../common/providers/AuthUserProvider';
-import { removePlanningSession } from '../../state/actions/planning-session.actions';
+import { removeGame as removeGameAction } from '../../state/actions/game.actions';
 import ConfirmDialog from '../alerts/ConfirmDialog';
 import useAlert from '../../common/hooks/useAlert';
 
@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SessionListItem = ({ planningSession }) => {
+const GameListItem = ({ game }) => {
   const { addAlert } = useAlert();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -52,10 +52,10 @@ const SessionListItem = ({ planningSession }) => {
   const classes = useStyles();
 
   const getDate = () =>
-    new Date(planningSession.createdAt.nanoseconds).toDateString();
+    new Date(game.createdAt.nanoseconds).toDateString();
 
   const getStories = () => {
-    const { stories } = planningSession;
+    const { stories } = game;
     if (!stories) {
       return 0;
     }
@@ -63,7 +63,7 @@ const SessionListItem = ({ planningSession }) => {
   };
 
   const getEffort = () => {
-    const { stories } = planningSession;
+    const { stories } = game;
     if (!stories) {
       return 0;
     }
@@ -71,7 +71,7 @@ const SessionListItem = ({ planningSession }) => {
   };
 
   const getDeck = () => {
-    const { deckType } = planningSession;
+    const { deckType } = game;
     if (!deckType) {
       return 'None';
     }
@@ -80,14 +80,14 @@ const SessionListItem = ({ planningSession }) => {
 
   const getStartUrl = () =>
     window.location.origin.toString() +
-    Routes.START_SESSION(planningSession.id);
+    Routes.START_GAME(game.id);
 
-  const startSession = () => {
-    history.push(Routes.START_SESSION(planningSession.id));
+  const startGame = () => {
+    history.push(Routes.START_GAME(game.id));
   };
 
-  const routeToEditSession = () => {
-    history.push(Routes.UPDATE_SESSION(planningSession.id));
+  const routeToEditGame = () => {
+    history.push(Routes.UPDATE_GAME(game.id));
   };
 
   const openRemoveConfirm = () => {
@@ -98,10 +98,10 @@ const SessionListItem = ({ planningSession }) => {
     setConfirmOpen(false);
   };
 
-  const removeSession = authUser => {
+  const removeGame = authUser => {
     setConfirmOpen(false);
     addAlert('Successfully removed planning session', 'success');
-    dispatch(removePlanningSession(authUser.uid, planningSession));
+    dispatch(removeGameAction(authUser.uid, game));
   };
 
   return (
@@ -115,7 +115,7 @@ const SessionListItem = ({ planningSession }) => {
               comopnent={'h4'}
               variant={'h6'}
             >
-              {planningSession.name}
+              {game.name}
             </Typography>
             <Typography
               className={classes.date}
@@ -130,7 +130,7 @@ const SessionListItem = ({ planningSession }) => {
               gutterBottom
             >
               URL:&nbsp;
-              <Link href={Routes.START_SESSION(planningSession.id)}>
+              <Link href={Routes.START_GAME(game.id)}>
                 {getStartUrl()}
               </Link>
             </Typography>
@@ -147,14 +147,14 @@ const SessionListItem = ({ planningSession }) => {
             </div>
           </CardContent>
           <CardActions className={classes.actions} disableSpacing>
-            <Button size="small" color="primary" onClick={startSession}>
-              Start Session
+            <Button size="small" color="primary" onClick={startGame}>
+              Start Game
             </Button>
             <div className={classes.actionsControls}>
               <IconButton
                 aria-label="edit"
                 color="secondary"
-                onClick={routeToEditSession}
+                onClick={routeToEditGame}
               >
                 <EditIcon />
               </IconButton>
@@ -173,11 +173,11 @@ const SessionListItem = ({ planningSession }) => {
         {({ authUser }) =>
           confirmOpen && (
             <ConfirmDialog
-              title={'Remove Planning Session'}
+              title={'Remove Planning Game'}
               message={
                 'Are you sure you want to remove this planning session? This action cannot be undone.'
               }
-              onConfirm={() => removeSession(authUser)}
+              onConfirm={() => removeGame(authUser)}
               onClose={onConfirmClose}
             />
           )
@@ -187,8 +187,8 @@ const SessionListItem = ({ planningSession }) => {
   );
 };
 
-SessionListItem.propTypes = {
-  planningSession: PropTypes.shape({
+GameListItem.propTypes = {
+  game: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
     deckType: PropTypes.string,
@@ -201,4 +201,4 @@ SessionListItem.propTypes = {
   }).isRequired,
 };
 
-export default SessionListItem;
+export default GameListItem;

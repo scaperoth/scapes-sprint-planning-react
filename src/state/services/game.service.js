@@ -1,16 +1,17 @@
 import firebase from './firebase';
 
-export const create = (userId, options) => {
-  return firebase.db.collection('planningSessions').add({
+const collectionName = 'games';
+
+export const create = (userId, options) =>
+  firebase.db.collection(collectionName).add({
     ...options,
     owner: userId,
     createdAt: firebase.doGetTimestamp(),
     updatedAt: firebase.doGetTimestamp(),
   });
-};
 
 export const getOne = sessionId => {
-  const query = firebase.db.collection('planningSessions').doc(sessionId);
+  const query = firebase.db.collection(collectionName).doc(sessionId);
   return new Promise((resolve, reject) => {
     query
       .get()
@@ -25,7 +26,7 @@ export const getOne = sessionId => {
 
 export const getAll = userId => {
   const query = firebase.db
-    .collection('planningSessions')
+    .collection(collectionName)
     .where('owner', '==', userId)
     .orderBy('createdAt', 'desc');
   return new Promise((resolve, reject) => {
@@ -44,8 +45,8 @@ export const getAll = userId => {
   });
 };
 
-export const update = async (options) => {
-  const query = firebase.db.collection('planningSessions').doc(options.id);
+export const update = async options => {
+  const query = firebase.db.collection(collectionName).doc(options.id);
   const newOptions = {
     ...options,
     updatedAt: firebase.doGetTimestamp(),
@@ -55,7 +56,7 @@ export const update = async (options) => {
 };
 
 export const remove = (userId, options) => {
-  const query = firebase.db.collection('planningSessions').doc(options.id);
+  const query = firebase.db.collection(collectionName).doc(options.id);
   return new Promise((resolve, reject) =>
     query
       .delete()

@@ -2,20 +2,20 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import PlanningSessionForm from './Form';
+import GameForm from './Form';
 import * as Routes from '../../constants/routes';
 import {
-  updatePlanningSession,
-  getPlanningSessionById,
-} from '../../state/actions/planning-session.actions';
+  updateGame,
+  getGameById,
+} from '../../state/actions/game.actions';
 import useAlert from '../../common/hooks/useAlert';
 
-const PlanningSessionUpdateForm = ({ authUser }) => {
+const GameUpdateForm = ({ authUser }) => {
   const { addAlert } = useAlert();
   const history = useHistory();
   const dispatch = useDispatch();
-  const planningSession = useSelector(state => state.planningSession.data);
-  const loading = useSelector(state => state.planningSession.loading);
+  const game = useSelector(state => state.game.data);
+  const loading = useSelector(state => state.game.loading);
 
   useEffect(() => {
     if (!authUser) {
@@ -23,35 +23,35 @@ const PlanningSessionUpdateForm = ({ authUser }) => {
     }
     const paths = history.location.pathname.split('/');
     const sessionId = paths[paths.length - 1];
-    dispatch(getPlanningSessionById(sessionId));
+    dispatch(getGameById(sessionId));
   }, [history.location.pathname, authUser, dispatch]);
 
   const handleSubmit = async formFields => {
     await dispatch(
-      updatePlanningSession({
-        ...planningSession,
+      updateGame({
+        ...game,
         ...formFields,
       }),
     );
     addAlert('Successfully updated planning session', 'success');
-    history.push(Routes.SESSIONS);
+    history.push(Routes.GAMES);
   };
 
   return (
-    !!planningSession.id && (
-      <PlanningSessionForm
+    !!game.id && (
+      <GameForm
         loading={loading}
-        defaultValues={planningSession}
+        defaultValues={game}
         handleSubmit={handleSubmit}
       />
     )
   );
 };
 
-PlanningSessionUpdateForm.propTypes = {
+GameUpdateForm.propTypes = {
   authUser: PropTypes.shape({
     uid: PropTypes.string,
   }).isRequired,
 };
 
-export default PlanningSessionUpdateForm;
+export default GameUpdateForm;

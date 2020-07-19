@@ -1,27 +1,27 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import PlanningSessionForm from './Form';
+import GameForm from './Form';
 import * as Routes from '../../constants/routes';
-import { createPlanningSession } from '../../state/actions/planning-session.actions';
+import { createGame } from '../../state/actions/game.actions';
 import { AuthUserContext } from '../../common/providers/AuthUserProvider';
 import useAlert from '../../common/hooks/useAlert';
 
-const PlanningSessionCreateForm = () => {
+const GameCreateForm = () => {
   const { addAlert } = useAlert();
   const history = useHistory();
   const dispatch = useDispatch();
 
   const handleSubmit = async (formFields, authUser) => {
-    await dispatch(createPlanningSession(authUser.uid, formFields));
+    await dispatch(createGame(authUser.uid, formFields));
     addAlert('Successfully created planning session', 'success');
-    history.push(Routes.SESSIONS);
+    history.push(Routes.GAMES);
   };
 
   return (
     <AuthUserContext.Consumer>
       {({ authUser }) => (
-        <PlanningSessionForm
+        <GameForm
           handleSubmit={formFields => handleSubmit(formFields, authUser)}
         />
       )}
@@ -29,4 +29,4 @@ const PlanningSessionCreateForm = () => {
   );
 };
 
-export default PlanningSessionCreateForm;
+export default GameCreateForm;

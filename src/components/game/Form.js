@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const PlanningSessionForm = ({ defaultValues, loading, handleSubmit }) => {
+const GameForm = ({ defaultValues, loading, handleSubmit }) => {
   const [formLoading, setFormLoading] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const [formFields, setFormFields] = useState(defaultValues);
@@ -136,14 +136,14 @@ const PlanningSessionForm = ({ defaultValues, loading, handleSubmit }) => {
   );
 };
 
-PlanningSessionForm.defaultProps = {
+GameForm.defaultProps = {
   defaultValues: {
     name: '',
   },
   loading: false,
 };
 
-PlanningSessionForm.propTypes = {
+GameForm.propTypes = {
   defaultValues: PropTypes.shape({
     name: PropTypes.string,
   }),
@@ -151,4 +151,4 @@ PlanningSessionForm.propTypes = {
   loading: PropTypes.bool,
 };
 
-export default PlanningSessionForm;
+export default GameForm;

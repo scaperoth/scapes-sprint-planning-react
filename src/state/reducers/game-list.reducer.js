@@ -1,7 +1,7 @@
 import {
   READ_ALL_TYPE,
   DELETE_TYPE,
-} from '../actions/planning-session.actions';
+} from '../actions/game.actions';
 import { buildActionRequests } from '../helpers';
 import ServerError from '../errors/server.error';
 
@@ -14,7 +14,7 @@ const initialState = {
   data: [],
 };
 
-const planningSessionListReducer = (state = initialState, action) => {
+const gameListReducer = (state = initialState, action) => {
   switch (action.type) {
     case getActions.pending.type:
     case deleteActions.pending.type:
@@ -47,4 +47,4 @@ const planningSessionListReducer = (state = initialState, action) => {
   }
 };
 
-export default planningSessionListReducer;
+export default gameListReducer;
